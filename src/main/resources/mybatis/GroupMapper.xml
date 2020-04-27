@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.song.shop.dao.GroupMapper">
+
+<!-- INSERT -->
+
+<!-- SELECT -->
+	<select id="getGroupParkList" parameterType="String" resultType="com.song.shop.dto.GroupDto">
+        SELECT T.GROUP_NM
+              , T.GROUP_TYPE
+              , CONCAT('G_',T.P_GROUP_SEQ) AS P_GROUP_SEQ
+              , CASE GROUp_TYPE
+                  WHEN 'GROUP' THEN CONCAT('G_', GROUP_SEQ)
+                  WHEN 'PARK' THEN CONCAT('P_', GROUP_SEQ)
+              END AS GROUP_SEQ,
+              GROUP_SEQ AS GROUP_SEQ_ORI,
+              DISP_ORDR
+        FROM (
+                 SELECT CAST(GROUP_SEQ AS VARCHAR) AS GROUP_SEQ
+                     , GROUP_NM  AS GROUP_NM
+                     , 'GROUP' AS GROUP_TYPE
+                     , P_GROUP_SEQ AS P_GROUP_SEQ
+                     , DISP_ORDR
+                 FROM CM_GROUP
+
+                 UNION ALL
+
+                 SELECT PRKPLCE_CODE AS GROUP_SEQ
+                     , PRKPLCE_NM AS GROUP_NM
+                     , 'PARK' AS GROUP_TYPE
+                     , GROUP_SEQ AS P_GROUP_SEQ
+                     , 99 AS DISP_ORDR
+                 FROM PK_PARK
+             ) T
+        WHERE T.GROUP_SEQ IN(
+            SELECT SUB_GROUP_SEQ AS GROUP_SEQ
+            FROM VW_CM_GROUP_PARK_LEAF
+            WHERE GROUP_SEQ = #{deptTy}
+        )
+        ORDER BY T.GROUP_NM ASC
+	</select>
+	
+	
+<!-- UPDATE -->
+
+<!-- DELETE -->
+	
+</mapper>
