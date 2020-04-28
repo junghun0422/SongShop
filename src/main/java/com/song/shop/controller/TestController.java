@@ -8,19 +8,19 @@ import javax.annotation.Resource;
 import org.aspectj.weaver.ast.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.song.shop.dto.CodeDto;
 import com.song.shop.dto.GroupDto;
 import com.song.shop.entity.GroupEntity;
 import com.song.shop.entity.UserEntity;
 import com.song.shop.repository.UserRepository;
+import com.song.shop.service.CodeService;
 import com.song.shop.service.GroupService;
-import com.song.shop.utils.ReturnData;
 
 @Controller
 public class TestController 
@@ -32,6 +32,9 @@ public class TestController
 	
 	@Resource(name = "groupService")
 	private GroupService groupService;
+	
+	@Resource(name = "codeService")
+	private CodeService codeService;
 	
 	@GetMapping("/")
 	public String index()
@@ -69,7 +72,12 @@ public class TestController
 	{
 		return groupService.getGroupParkList("G_1");
 	}
-	 
+	
+	@RequestMapping("/getCodeList")
+	public @ResponseBody List<CodeDto> getCodeList()
+	{
+		return codeService.getCodeList();
+	}
 	
 	/*
 	 * @RequestMapping("/navercallback") public String naverLoginCallBack() {

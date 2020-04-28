@@ -1,4 +1,4 @@
-package com.song.shop.dao;
+package com.song.shop.mapper;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import com.song.shop.dto.GroupDto;
 import com.song.shop.entity.GroupEntity;
 
-//@Mapper
 @Repository("groupMapper")
 public interface GroupMapper 
 {

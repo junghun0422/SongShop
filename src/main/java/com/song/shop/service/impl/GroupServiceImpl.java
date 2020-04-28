@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.song.shop.dao.GroupMapper;
 import com.song.shop.dto.GroupDto;
 import com.song.shop.entity.GroupEntity;
+import com.song.shop.mapper.GroupMapper;
 import com.song.shop.repository.GroupRepository;
 import com.song.shop.service.GroupService;
 

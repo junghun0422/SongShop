@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.song.shop.mapper.CodeMapper">
+<!-- INSERT -->
+
+
+<!-- SELECT -->
+    <!--
+        쿼리명: 코드정보 조회
+        설명: 공통코드를 조회하기 위한 쿼리
+    -->
+    <select id="getCodeList" resultType="com.song.shop.dto.CodeDto">
+        SELECT * FROM (
+            SELECT CM_CODE_CD
+            , GR_CODE_CD
+            , (SELECT CD_NM FROM CM_CODE_SUB_GR WHERE GR_CODE_CD = A.GR_CODE_CD) AS GR_CODE_CD_NM
+            , SUB_CODE_CD
+            , (SELECT CD_NM FROM CM_CODE_SUB WHERE GR_CODE_CD = A.GR_CODE_CD AND SUB_CODE_CD = A.SUB_CODE_CD) AS SUB_CODE_CD_NM
+            , CM_CODE_CD_CODE
+            , CD_DC
+            , CD_DC_EN
+            , CD_NM
+            , CD_NM_EN
+            , USE_AT
+            , CD_DEL_AT
+            , REGIST_TRNSCTOR
+            , REGIST_DT
+            , DISP_ORDR
+            , COALESCE((SELECT user_nm FROM CM_USER WHERE USER_ID = a.REGIST_TRNSCTOR LIMIT 1), REGIST_TRNSCTOR) as REGIST_TRNSCTOR_NM
+            FROM CM_CODE A
+            WHERE 1=1
+                    AND USE_AT = 'Y'
+        ) TT
+        WHERE 1=1
+        ORDER BY CM_CODE_CD, DISP_ORDR
+	</select>
+<!-- UPDATE -->
+
+
+<!-- DELETE -->
+
+
+</mapper>

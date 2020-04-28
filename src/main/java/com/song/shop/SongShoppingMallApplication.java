@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootApplication
-@MapperScan(basePackages = "com.song.shop.dao")
+@MapperScan(basePackages = "com.song.shop.mapper")
 public class SongShoppingMallApplication 
 {
 
@@ -29,7 +29,7 @@ public class SongShoppingMallApplication
 	{
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource);
-		sessionFactory.setTypeAliasesPackage("com.song.shop.dao");
+		sessionFactory.setTypeAliasesPackage("com.song.shop.mapper");
 		sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/*.xml"));
 		return sessionFactory.getObject();
 	}
