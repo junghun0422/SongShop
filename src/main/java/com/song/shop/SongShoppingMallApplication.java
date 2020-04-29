@@ -39,5 +39,4 @@ public class SongShoppingMallApplication
 	{
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
-
 }

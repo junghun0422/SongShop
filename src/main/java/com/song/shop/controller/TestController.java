@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.song.shop.dto.CodeDto;
@@ -58,6 +59,12 @@ public class TestController
 	public String treePage()
 	{
 		return "main/tree";
+	}
+	
+	@RequestMapping("/webSocket")
+	public String webSockete()
+	{
+		return "main/websocket";
 	}
 	
 	@RequestMapping("/getGroupList") 

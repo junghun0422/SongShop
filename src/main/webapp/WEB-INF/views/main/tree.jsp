@@ -56,7 +56,7 @@ input
 <script type="text/javascript">
 	$(document).ready(function() 
 	{
-
+/* 
 	$.ajax({
 		datatype	:	"json",
 		url			:	"/getGroupList",
@@ -77,7 +77,7 @@ input
 			console.log(JSON.stringify(data));
 		}
 	});
-		
+		 */
       var adapter = new $.jqx.dataAdapter(
 		{
 			datatype	:	"json",
