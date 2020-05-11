@@ -3,12 +3,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>LOGIN PAGE</title>
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 <!--Fontawesome CDN-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
@@ -16,13 +16,15 @@
 
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
+<script type="text/javascript" src="lib/scripts/jquery-1.12.4.min.js"></script>
 </head>
 <body>
 <div class="_container">
 	<div class="d-flex justify-content-center h-100">
 		<div class="card">
 			<div class="card-header">
-				<h3> 로그인 </h3>
+				<h3> 로그인</h3>
 				<div class="d-flex justify-content-end social_icon">
 					<span><i id="naverIdLogin"></i></span>
 					<span>
@@ -39,20 +41,20 @@
 					<div class="input-group-prepend">
 						<span class="input-group-text"><i class="fas fa-user"></i></span>
 					</div>
-					<input type="text" class="form-control" placeholder="username" id="user_id" name="user_id" onkeypress="nonHangulSpecialKey();">
+					<input type="text" class="form-control" placeholder="아이디" id="user_id" name="user_id">
 				</div>
 				<div class="input-group form-group">
 					<div class="input-group-prepend">
 						<span class="input-group-text"><i class="fas fa-key"></i></span>
 					</div>
-					<input type="password" class="form-control" placeholder="password" id="password" name="password">
+					<input type="password" class="form-control" placeholder="비밀번호" id="password" name="password">
 				</div>
 				<div class="row align-items-center remember">
 					<input type="checkbox" id="storage">아이디 저장
 				</div>
 				<div class="form-group" style="margin-top:20px;">
 					<button type="button" class="btn float-left join-in" id="joinIn">회원가입</button>
-					<button type="button" class="btn float-right login-btn">로그인</button>
+					<button type="button" class="btn float-right login-btn" id="loginBtn">로그인</button>
 				</div>
 			</div>
 		</div>
@@ -71,10 +73,11 @@
 	// 설정정보를 초기화하고 연동을 준비
 	naverLogin.init();
 
-
 	$("#joinIn").click(function() 
 	{
-		location.replace("/treePage");	
+		//location.replace("/treePage");
+
+		location.replace("/join")	
 	});
 
 	
@@ -120,7 +123,7 @@
 	 */
 	
 
-	$(".login-btn").click(function() 
+	$("#loginBtn").click(function() 
 	{
 		if("" == $("#user_id").val() || "" == $("#password").val())
 		{
@@ -128,10 +131,37 @@
 			return;
 		}
 
-		if($("input:checkbox[id='storage']").is(":checked")) 
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+
+		var jsonData = {
+			"user_id" : $("#user_id").val(), 
+			"password" : $("#password").val()
+		};
+		
+		$.ajax({
+			url			:	"/checkUser",
+			type		:	"post",	
+			datatype	:	"json",
+			data		:	jsonData,
+			beforeSend	:	function(xhr)
+			{
+				xhr.setRequestHeader(header, token);
+			},
+			success		:	function(data)
+			{
+				alert(data);
+			},
+			error		:	function(request, status, error)
+			{
+				alert("ERROR :: " + request.status + " | " + request.responseText + " | " + error);
+			}
+		});
+
+/* 		if($("input:checkbox[id='storage']").is(":checked")) 
 			localStorage.setItem("user_id", $("#user_id").val());
 		else 
-			localStorage.setItem("user_id", "0");
+			localStorage.setItem("user_id", "0"); */
 	});
 
 	$(function() 

@@ -36,12 +36,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	protected void configure(HttpSecurity http) throws Exception 
 	{
 		http.authorizeRequests()
-				.antMatchers("/").permitAll()
-				.antMatchers("/**").permitAll()
-				.anyRequest().authenticated()
-				.and().logout().permitAll()
-				.and().formLogin()
-				.and().csrf().disable();
+				// 페이지 권한 설정
+				//.antMatchers("/member/**").hasRole("MEMBER")
+				//.antMatchers("/admin/**").hasRole("ADMIN")
+				.antMatchers("/").permitAll();
+//			.and()	// 로그인 설정
+//				.formLogin()
+//				.loginPage("/")
+//				.defaultSuccessUrl("/member/login/result")
+//				.permitAll()
+//			.and()	// 로그아웃 설정
+//				.logout()
+//				.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+//				.logoutSuccessUrl("/member/logout/result")
+//				.invalidateHttpSession(true)
+//			.and()	// 403 예외처리 핸들링
+//				.exceptionHandling().accessDeniedPage("/member/denied");
+//				
+				
+				
+//				.anyRequest().authenticated()
+//				.and().logout().permitAll()
+//				.and().formLogin()
+//				.and().csrf().disable();
 				
 //			.and()
 //				.formLogin()
@@ -56,21 +73,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 //				.exceptionHandling().accessDeniedPage("/denied");
 	}
 
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
-	{
-		auth.inMemoryAuthentication().withUser("song").password(passwordEncoder().encode("copycopy")).roles("USER");
-		
-		auth.inMemoryAuthentication().withUser("jung").password(passwordEncoder().encode("hoho")).roles("ADMIN");
-		
-	}
-	
 //	@Override
 //	protected void configure(AuthenticationManagerBuilder auth) throws Exception 
 //	{
 //		auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
 //	}
-	
-	
-	
-	
 }

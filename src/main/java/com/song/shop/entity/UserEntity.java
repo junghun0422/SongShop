@@ -27,21 +27,21 @@ public class UserEntity
 	@Column(name = "password")
 	private String password;
 	
-	@Column(name = "user_role")
-	private String user_role;	// admin, consumer, merchant
+	@Column(name = "auth_level")
+	private String auth_level;	// admin, consumer, merchant
 	
-	@Column(name = "user_type")
-	private String user_type;	// local, naver, kakao
+	@Column(name = "regist_dt")
+	private String regist_dt;	
 
 
 	@Builder 
-	public UserEntity(String user_id, String user_nm, String password, String user_role, String user_type) 
+	public UserEntity(String user_id, String user_nm, String password, String auth_level, String regist_dt) 
 	{ 
 		this.user_id = user_id; 
 		this.user_nm = user_nm; 
 		this.password = password; 
-		this.user_role = user_role; 
-		this.user_type = user_type; 
+		this.auth_level = auth_level; 
+		this.regist_dt = regist_dt; 
 	}
 	 
 }
