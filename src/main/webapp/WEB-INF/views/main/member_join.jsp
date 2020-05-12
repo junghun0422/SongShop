@@ -3,10 +3,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+<script type="text/JavaScript" src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+
 <style>
 	html 
 	{
@@ -23,23 +27,22 @@
 	
 	.container
 	{
-		display:flex;
-		width:500px;
-		height:100%;
+		display	:	flex;
+		height	:	100%;
 	}
 	
 	.bg-light
 	{
+		width				:	500px;
 		background-color	:	rgba(0,0,0,0.5) !important;
-		margin-top	:	auto;
-		margin-bottom	:	auto;
+		margin				:	auto;
 	}
 	
 	.container h4
 	{
 		color	:	white;
+		font-weight	:	bold;
 		margin-bottom: 1.75rem;
-		
 	}
 	
 	.input-group-prepend span 
@@ -50,68 +53,178 @@
 	    border: 0 !important;
 	}
 	
+	.input-group>.form-control
+	{
+		width	:	310px;
+	}
+	
+	.btn-block
+	{
+		width			:	150px;
+		color			:	white;
+		font-weight		:	bold;
+		margin-left		:	auto;
+		margin-right	:	auto;
+	}
 </style>
 </head>
 <body>
 	<div class="container">
-	<div class="card bg-light" >
-	<article class="card-body mx-auto" style="max-width: 400px;">
-		<h4 class="card-title mt-3 text-center">회원 가입</h4>
-		<form>
-		<div class="form-group input-group">
-			<div class="input-group-prepend">
-			    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-			 </div>
-	        <input name="" class="form-control" placeholder="이름" type="text">
-	    </div> <!-- form-group// -->
-	    <div class="form-group input-group">
-	    	<div class="input-group-prepend">
-			    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-			 </div>
-	        <input name="" class="form-control" placeholder="이메일" type="email">
-	    </div> <!-- form-group// -->
-	    <div class="form-group input-group">
-	    	<div class="input-group-prepend">
-			    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
-			</div>
-			<select class="custom-select" style="max-width: 100px;">
-			    <option selected value="korea">+82</option>
-			    <option value="usa">+1</option>
-			    <option value="jpa">+81</option>
-			    <option value="chi">+86</option>
-			</select>
-	    	<input name="" class="form-control" placeholder="휴대폰 번호" type="text">
-	    </div> <!-- form-group// -->
-	    <div class="form-group input-group">
-	    	<div class="input-group-prepend">
-			    <span class="input-group-text"> <i class="fa fa-building"></i> </span>
-			</div>
-			<select class="form-control">
-				<option selected value="merchant">상인</option>
-				<option value="customer">고객</option>
-			</select>
-		</div> <!-- form-group end.// -->
-	    <div class="form-group input-group">
-	    	<div class="input-group-prepend">
-			    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-			</div>
-	        <input class="form-control" placeholder="비밀번호" type="password">
-	    </div> <!-- form-group// -->
-	    <div class="form-group input-group">
-	    	<div class="input-group-prepend">
-			    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-			</div>
-	        <input class="form-control" placeholder="비밀번호 확인" type="password">
-	    </div> <!-- form-group// -->                                      
-	    <div class="form-group">
-	        <button type="submit" class="btn btn-warning btn-block"> 가입하기  </button>
-	    </div> <!-- form-group// -->                                                                 
-	</form>
-	</article>
-	</div> <!-- card.// -->
-	
+		<div class="card bg-light" >
+			<article class="card-body mx-auto" style="max-width: 400px;">
+				<h4 class="card-title mt-3 text-center">회원 가입</h4>
+				<div class="form-group input-group">
+					<div class="input-group-prepend">
+				    	<span class="input-group-text"> <i class="fa fa-user"></i> </span>
+				 	</div>
+				 	<span><input name="user_id" id="user_id" class="form-control" placeholder="아이디" type="text" style="width:250px;"></span>
+				 	<span><button id="checkBtn" class="btn btn-danger" style="margin-left:3px;">중복</button></span>
+		    	</div> <!-- form-group// -->
+				<div class="form-group input-group">
+					<div class="input-group-prepend">
+				    	<span class="input-group-text"> <i class="fa"></i> </span>
+				 	</div>
+				 	<input name="user_nm" class="form-control" placeholder="이름" type="text">
+		    	</div> <!-- form-group// -->
+				<div class="form-group input-group">
+		    		<div class="input-group-prepend">
+				    	<span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+					</div>
+		        	<input name="pwd1" id="pwd1" class="form-control" placeholder="비밀번호" type="password" required >
+		    	</div> <!-- form-group// -->
+		    	<div class="form-group input-group">
+		    		<div class="input-group-prepend">
+				    	<span class="input-group-text"> <i class="fa"></i> </span>
+					</div>
+		        	<input name="pwd2" id="pwd2" class="form-control" placeholder="비밀번호 확인" type="password" required>
+		        	<div class="alert alert-success" id="alert-success" style="display:none;">비밀번호가 일치합니다.</div>
+		        	<div class="alert alert-danger" id="alert-danger" style="display:none;">비밀번호가 일치하지 않습니다.</div>
+		    	</div> <!-- form-group// -->
+		    	<div class="form-group input-group">
+		    		<div class="input-group-prepend">
+				    	<span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+				 	</div>
+		        	<input name="email" class="form-control" placeholder="이메일" type="email">
+		    	</div> <!-- form-group// -->
+		    	<div class="form-group input-group">
+		    		<div class="input-group-prepend">
+				    	<span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+					</div>
+		    		<input name="phone_num" class="form-control" placeholder="휴대폰 번호" type="text">
+		    	</div> <!-- form-group// -->
+		    	<div class="form-group input-group">
+		    		<div class="input-group-prepend">
+				    	<span class="input-group-text"> <i class="fa fa-building"></i> </span>
+					</div>
+					<select id="user_type" class="form-control">
+						<option selected value="1">판매자</option>
+						<option value="2">고객</option>
+					</select>
+				</div>
+		    	<div class="form-group input-group">
+		    		<div class="input-group-prepend">
+				    	<span class="input-group-text"> <i class="fa fa-shipping-fast"></i> </span>
+					</div>
+					<input type="text" class="form-control" name="zip_code" placeholder="우편번호 찾기" id="zip_code" readonly="readonly" style="cursor:pointer;">
+				</div>				
+		    	<div class="form-group input-group">
+		    		<div class="input-group-prepend">
+				    	<span class="input-group-text"> <i class="fa fa-map-marker-alt"></i> </span>
+					</div>
+					<input type="text" class="form-control" placeholder="주소를 검색해주세요" id="address1" readonly="readonly" style="cursor:pointer;">
+				</div> 
+				<div class="form-group input-group">
+		    		<div class="input-group-prepend">
+				    	<span class="input-group-text"> <i class="fa"></i> </span>
+					</div>
+					<input type="text" class="form-control" placeholder="상세주소" id="address2">
+				</div>
+				<!-- form-group end.// -->
+	                                      
+		    	<div class="form-group">
+		        	<button class="btn btn-warning btn-block"> 가입하기  </button>
+		    	</div> <!-- form-group// -->                                                                 
+			</article>
+		</div> <!-- card.// -->
 	</div> 
 	<!--container end.//-->
 </body>
+<script>
 
+	var token = ""; 
+	var header = "";
+
+	$("#checkBtn").click(function() 
+	{
+		if($("#user_id").val() == "") 
+		{
+			alert("아이디를 입력해주세요."); 
+			return;
+		}
+
+		$.ajax({
+			url			:	"/check/join/checkUser",
+			type		:	"post",
+			dataType	:	"json",
+			data		:	{ "user_id" : $("#user_id").val() },
+			beforeSend	:	function(xhr)
+			{
+				xhr.setRequestHeader(header, token);
+			},
+			success		:	function(result)
+			{
+				if("OK" == result)
+				{
+					alert("사용가능한 아이디 입니다.")
+				}
+				else
+				{
+					alert("다른 아이디를 사용해 주세요.");
+				}
+			}
+		});
+	});
+
+
+	$("#pwd1, #pwd2").keyup(function() 
+	{
+		var pwd1 = $("#pwd1").val();
+		var pwd2 = $("#pwd2").val();
+
+		if(pwd1 != "" || pwd2 != "")
+		{
+			if(pwd1 == pwd2)
+			{
+				$("#alert-success").show();
+				$("#alert-danger").hide();
+			}
+			else
+			{
+				$("#alert-danger").show();
+				$("#alert-success").hide();
+			}
+		}
+	});
+
+	$("#zip_code, #address1").click(function() 
+	{
+		new daum.Postcode({
+			oncomplete:function(data) 
+			{
+				$("#zip_code").val(data.zonecode);
+				$("#address1").val(data.roadAddress);
+			}
+		})
+		.open({
+			left	:	(window.screen.width/2) - (500/2),
+			top		:	(window.screen.height/2) - (600/2)
+		});
+	});
+
+	$(function() 
+	{
+		token = $("meta[name='_csrf']").attr("content");
+		header =  $("meta[name='_csrf_header']").attr("content");
+	});
+</script>
 </html>

@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
@@ -16,9 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SpringBootApplication
 @MapperScan(basePackages = "com.song.shop.mapper")
-public class SongShoppingMallApplication 
+public class SongShoppingMallApplication
 {
-
 	public static void main(String[] args) 
 	{
 		SpringApplication.run(SongShoppingMallApplication.class, args);
