@@ -1,7 +1,11 @@
 package com.song.shop.entity;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -45,13 +49,28 @@ public class UserEntity
 	@Column(name = "detail_address")
 	private String detail_address;
 	
-	
 	@Column(name = "regist_dt")
-	private String regist_dt;
+	private Timestamp regist_dt;
+	
+	public UserEntity() { }
+	
+	@Builder 
+	public UserEntity(String user_id, String user_nm, String password, String email, int auth_level, String phone_num,
+			String zip_code, String address, String detail_address) {
+		this.user_id = user_id;
+		this.user_nm = user_nm;
+		this.password = password;
+		this.email = email;
+		this.auth_level = auth_level;
+		this.phone_num = phone_num;
+		this.zip_code = zip_code;
+		this.address = address;
+		this.detail_address = detail_address;
+	}
 
 	@Builder 
 	public UserEntity(String user_id, String user_nm, String password, String email, int auth_level, String phone_num,
-			String zip_code, String address, String detail_address, String regist_dt) {
+			String zip_code, String address, String detail_address, Timestamp regist_dt) {
 		this.user_id = user_id;
 		this.user_nm = user_nm;
 		this.password = password;
@@ -62,5 +81,14 @@ public class UserEntity
 		this.address = address;
 		this.detail_address = detail_address;
 		this.regist_dt = regist_dt;
+	}
+
+	@Override
+	public String toString() {
+		return "UserEntity [user_id=" + user_id + ", user_nm=" + user_nm + ", password=" + password + ", email=" + email
+				+ ", auth_level=" + auth_level + ", phone_num=" + phone_num + ", zip_code=" + zip_code + ", address="
+				+ address + ", detail_address=" + detail_address + ", regist_dt=" + regist_dt + "]";
 	}	
+	
+	
 }

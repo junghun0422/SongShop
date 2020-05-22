@@ -84,7 +84,7 @@
 					<div class="input-group-prepend">
 				    	<span class="input-group-text"> <i class="fa"></i> </span>
 				 	</div>
-				 	<input name="user_nm" class="form-control" placeholder="이름" type="text">
+				 	<input name="user_nm" id="user_nm" class="form-control" placeholder="이름" type="text">
 		    	</div> <!-- form-group// -->
 				<div class="form-group input-group">
 		    		<div class="input-group-prepend">
@@ -104,19 +104,19 @@
 		    		<div class="input-group-prepend">
 				    	<span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
 				 	</div>
-		        	<input name="email" class="form-control" placeholder="이메일" type="email">
+		        	<input name="email" id="email" class="form-control" placeholder="이메일" type="email">
 		    	</div> <!-- form-group// -->
 		    	<div class="form-group input-group">
 		    		<div class="input-group-prepend">
 				    	<span class="input-group-text"> <i class="fa fa-phone"></i> </span>
 					</div>
-		    		<input name="phone_num" class="form-control" placeholder="휴대폰 번호" type="text">
+		    		<input name="phone_num" id="phone_num" class="form-control" placeholder="휴대폰 번호" type="text">
 		    	</div> <!-- form-group// -->
 		    	<div class="form-group input-group">
 		    		<div class="input-group-prepend">
 				    	<span class="input-group-text"> <i class="fa fa-building"></i> </span>
 					</div>
-					<select id="user_type" class="form-control">
+					<select id="user_type" name="user_type" class="form-control">
 						<option selected value="1">판매자</option>
 						<option value="2">고객</option>
 					</select>
@@ -142,7 +142,7 @@
 				<!-- form-group end.// -->
 	                                      
 		    	<div class="form-group">
-		        	<button class="btn btn-warning btn-block"> 가입하기  </button>
+		        	<button class="btn btn-warning btn-block" id="joinBtn"> 가입하기  </button>
 		    	</div> <!-- form-group// -->                                                                 
 			</article>
 		</div> <!-- card.// -->
@@ -163,7 +163,7 @@
 		}
 
 		$.ajax({
-			url			:	"/check/join/checkUser",
+			url			:	"/join/checkUser",
 			type		:	"post",
 			dataType	:	"json",
 			data		:	{ "user_id" : $("#user_id").val() },
@@ -185,6 +185,38 @@
 		});
 	});
 
+	$("#joinBtn").click(function () 
+	{	
+		var param = 
+		{
+			"user_id"	:	$("#user_id").val(),
+			"user_nm"	:	$("#user_nm").val(),
+			"password"	:	$("#pwd1").val(),
+			"email"		:	$("#email").val(),
+			"auth_level":	$("select[name=user_type]").val(),
+			"zip_code"	:	$("#zip_code").val(),
+			"phone_num"	:	$("#phone_num").val(),
+			"address"	:	$("#address1").val(),
+			"detail_address"	:	$("#address2").val()
+		};
+
+		console.log(JSON.stringify(param));
+		
+		$.ajax({
+			url			:	"/join/member",
+			type		:	"post",
+			dataType	:	"json",
+			data		:	param,
+			beforeSend	:	function(xhr)
+			{
+				xhr.setRequestHeader(header, token);
+			},
+			success		:	function(result)
+			{
+				alert(result);
+			}
+		});
+	});
 
 	$("#pwd1, #pwd2").keyup(function() 
 	{
@@ -208,7 +240,8 @@
 
 	$("#zip_code, #address1").click(function() 
 	{
-		new daum.Postcode({
+		new daum.Postcode(
+		{
 			oncomplete:function(data) 
 			{
 				$("#zip_code").val(data.zonecode);
@@ -226,5 +259,6 @@
 		token = $("meta[name='_csrf']").attr("content");
 		header =  $("meta[name='_csrf_header']").attr("content");
 	});
+
 </script>
 </html>
