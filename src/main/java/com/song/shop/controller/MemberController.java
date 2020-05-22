@@ -15,7 +15,7 @@ public class MemberController
 	private UserService userService;
 	
 	@RequestMapping("/join/checkUser")
-	public String checkUserId(String user_id)
+	public @ResponseBody String checkUserId(String user_id)
 	{
 		return userService.checkUserId(user_id);
 	}
@@ -24,5 +24,11 @@ public class MemberController
 	public @ResponseBody String joinMember(UserDto userDto)
 	{
 		return userService.joinMember(userDto);
+	}
+	
+	@RequestMapping("/memeber/login")
+	public @ResponseBody String checkUser(String user_id, String password)
+	{
+		return userService.memberLogin(user_id, password);
 	}
 }

@@ -107,7 +107,7 @@ public class TestController
 	@RequestMapping("/checkUser")
 	public @ResponseBody String checkUser(String user_id, String password)
 	{
-		Optional<UserEntity> userDto = userRepository.findById(user_id);
+		Optional<UserEntity> userEntity = userRepository.findById(user_id);
 		
 		String en_pw = EncryptUtils.encryptSHA256(password, user_id.getBytes()).toUpperCase();
 		System.out.println(en_pw);

@@ -6,5 +6,7 @@ public interface UserService
 { 
 	String checkUserId(String user_id);
 	
-	String joinMember(UserDto userDto); 
+	String joinMember(UserDto userDto);
+	
+	String memberLogin(String user_id, String password);
 }

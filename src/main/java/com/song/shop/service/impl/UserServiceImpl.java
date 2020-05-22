@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Optional;
 
+import org.hibernate.Criteria;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,28 @@ public class UserServiceImpl implements UserService
 		UserEntity user = userRepository.save(new UserEntity(userDto.getUser_id(), userDto.getUser_nm(), pwd, userDto.getEmail(), userDto.getAuth_level(), 
 				userDto.getPhone_num(), userDto.getZip_code(), userDto.getAddress(), userDto.getDetail_address(), Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()))));
 		return "";
+	}
+
+	@Override
+	public String memberLogin(String user_id, String password) 
+	{
+		Optional<UserEntity> userEntity = userRepository.findById(user_id);
+		
+		String input_pwd = EncryptUtils.encryptSHA256(password, user_id.getBytes()).toUpperCase();
+		
+		if(userEntity != null)
+		{
+			if(input_pwd.equals(userEntity.get().getPassword()))
+			{
+				return "로그인 성공";
+			}
+			
+			return "로그인 실패!";
+			
+		}
+		
+		return "로그인 실패";
 	}	
+	
+	
 }

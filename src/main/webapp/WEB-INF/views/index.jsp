@@ -140,7 +140,7 @@
 		};
 		
 		$.ajax({
-			url			:	"/checkUser",
+			url			:	"/memeber/login",
 			type		:	"post",	
 			datatype	:	"json",
 			data		:	jsonData,
