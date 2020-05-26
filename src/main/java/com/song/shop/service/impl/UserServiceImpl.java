@@ -66,7 +66,12 @@ public class UserServiceImpl implements UserService
 		}
 		
 		return "로그인 실패";
+	}
+
+	@Override
+	public Optional<UserEntity> selectUser(String user_id) 
+	{
+		return userRepository.findById(user_id);
+		
 	}	
-	
-	
 }

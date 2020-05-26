@@ -98,7 +98,7 @@ public class TestController
 		return msg;
 	}
 	
-	@RequestMapping("/join")
+	@RequestMapping("/join-member")
 	public String memberJoin()
 	{
 		return "main/member_join";

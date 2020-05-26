@@ -36,27 +36,30 @@
 					</span>
 				</div>
 			</div>
-			<div class="card-body">
-				<div class="input-group form-group">
-					<div class="input-group-prepend">
-						<span class="input-group-text"><i class="fas fa-user"></i></span>
+			<form method="post" action="/login-processing" id="loginForm" onsubmit="return check();">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				<div class="card-body">
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+						</div>
+						<input type="text" class="form-control" placeholder="아이디" id="user_id" name="user_id">
 					</div>
-					<input type="text" class="form-control" placeholder="아이디" id="user_id" name="user_id">
-				</div>
-				<div class="input-group form-group">
-					<div class="input-group-prepend">
-						<span class="input-group-text"><i class="fas fa-key"></i></span>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-key"></i></span>
+						</div>
+						<input type="password" class="form-control" placeholder="비밀번호" id="password" name="password">
 					</div>
-					<input type="password" class="form-control" placeholder="비밀번호" id="password" name="password">
+					<div class="row align-items-center remember">
+						<input type="checkbox" id="storage">아이디 저장
+					</div>
+					<div class="form-group" style="margin-top:20px;">
+						<button type="button" class="btn float-left join-in" id="joinIn">회원가입</button>
+						<input type="submit" class="btn float-right login-btn" id="loginBtn" value="로그인">
+					</div>
 				</div>
-				<div class="row align-items-center remember">
-					<input type="checkbox" id="storage">아이디 저장
-				</div>
-				<div class="form-group" style="margin-top:20px;">
-					<button type="button" class="btn float-left join-in" id="joinIn">회원가입</button>
-					<button type="button" class="btn float-right login-btn" id="loginBtn">로그인</button>
-				</div>
-			</div>
+			</form>
 		</div>
 	</div>
 </div>
@@ -77,9 +80,22 @@
 	{
 		//location.replace("/treePage");
 
-		location.replace("/join")	
+		location.replace("/join-member")	
 	});
 
+	function check()
+	{
+		var user_id = $("#user_id").val();
+		var pwd = $("#password").val();
+		
+		if(user_id == "" || pwd == "") 
+		{
+			alert("로그인 정보를 입력해주세요.");
+			return false;
+		}
+		else
+			return true;
+	}
 	
 /*
 	window.addEventListener("load", function() 
@@ -123,7 +139,7 @@
 	 */
 	
 
-	$("#loginBtn").click(function() 
+/* 	$("#loginBtn").click(function() 
 	{
 		if("" == $("#user_id").val() || "" == $("#password").val())
 		{
@@ -140,7 +156,7 @@
 		};
 		
 		$.ajax({
-			url			:	"/memeber/login",
+			url			:	"/login-processing",
 			type		:	"post",	
 			datatype	:	"json",
 			data		:	jsonData,
@@ -151,18 +167,18 @@
 			success		:	function(data)
 			{
 				alert(data);
+
+				if($("input:checkbox[id='storage']").is(":checked")) 
+					localStorage.setItem("user_id", $("#user_id").val());
+				else 
+					localStorage.setItem("user_id", "0");
 			},
 			error		:	function(request, status, error)
 			{
 				alert("ERROR :: " + request.status + " | " + request.responseText + " | " + error);
 			}
 		});
-
-/* 		if($("input:checkbox[id='storage']").is(":checked")) 
-			localStorage.setItem("user_id", $("#user_id").val());
-		else 
-			localStorage.setItem("user_id", "0"); */
-	});
+	}); */
 
 	$(function() 
 	{
@@ -173,6 +189,10 @@
 		}
 
 		$("input").on("blur keyup", function() { $(this).val( $(this).val().replace( /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '' ) ); });
+
+		var message = '${message}';
+ 		var blank_pattern = /^\s+|\s+$/g;
+		if(message.replace(blank_pattern, "") != "") alert(message);
 	});
 </script>
 </body>
