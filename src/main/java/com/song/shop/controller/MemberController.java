@@ -46,11 +46,11 @@ public class MemberController
 		return userService.memberLogin(user_id, password);
 	}
 	
-	@RequestMapping(value = { "/login", "" })
+	@RequestMapping(value = { "/login", "/", "//" })
 	public String login(Model model, HttpServletRequest request, HttpServletResponse response, String loginFail) throws IOException
 	{
 		String auth = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
-		
+		System.out.println(request.getRequestURL());
 		if("[ROLE_ANONYMOUS]".equals(auth))
 		{
 			model.addAttribute("message", "loginFail");
