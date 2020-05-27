@@ -42,8 +42,6 @@ public class AuthProvider implements AuthenticationProvider
 	{
 		Optional<UserEntity> user = authorizationService.login(user_id, password);
 		
-		//UserDto user = authorizationService.login(user_id, password);
-		
 		if(!user.isPresent())
 		{
 			System.out.println("[AuthProvider] :: 로그인 정보 없음.");

@@ -6,7 +6,7 @@
 		SELECT 
 			user_id, user_nm, password, email, auth_level, phone_num, zip_code, address, detail_address, regist_dt
 		FROM 
-			User
+			"user"
 		WHERE 
 			user_id = #{user_id}
 	</select>

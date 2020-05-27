@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.song.shop.dto.UserDto;
 import com.song.shop.service.UserService;
@@ -58,20 +59,20 @@ public class MemberController
 		else return "redirect:/goToMainPage";
 	}
 	
-	@RequestMapping(value="/goToMainPage", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value="/go/goToMainPage", method = { RequestMethod.GET, RequestMethod.POST })
 	public String goToMainPage(Model model, Authentication auth, HttpServletResponse response, HttpServletRequest request)
 	{
 		String returnUrl = "";
 		switch(auth.getAuthorities().toString())
 		{
 			case "[ROLE_ADMIN]" :  
-				returnUrl = "main/admin/admin_main";
+				returnUrl = "admin/admin_main";
 				break;
 			case "[ROLE_SELLER]" : 
-				returnUrl = "main/seller/seller_main";
+				returnUrl = "seller/seller_main";
 				break;
 			case "[ROLE_CONSUMER]" : 
-				returnUrl = "main/consumer/consumer_main";
+				returnUrl = "consumer/consumer_main";
 				break;
 		}
 		

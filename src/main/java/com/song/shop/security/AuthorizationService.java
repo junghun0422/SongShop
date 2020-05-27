@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
+import com.song.shop.dto.UserDto;
 import com.song.shop.entity.UserEntity;
 import com.song.shop.mapper.UserMapper;
 import com.song.shop.repository.UserRepository;
@@ -24,19 +25,6 @@ public class AuthorizationService
 	
 	public Optional<UserEntity> login(String user_id, String password)
 	{
-//		UserDto user = userMapper.selectUserById(user_id);
-//		
-//		String input_pwd = EncryptUtils.encryptSHA256(password, user_id.getBytes()).toUpperCase();
-//		
-//		if(user != null)
-//		{
-//			if(input_pwd.equals(user.getPassword()))
-//			{
-//				return user;
-//			}
-//		}
-//		
-//		return user;
 		Optional<UserEntity> userEntity = userRepository.findById(user_id);
 		if(userEntity.isPresent())
 		{
