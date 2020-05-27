@@ -59,10 +59,12 @@ public class MemberController
 		else return "redirect:/goToMainPage";
 	}
 	
-	@RequestMapping(value="/go/goToMainPage", method = { RequestMethod.GET, RequestMethod.POST })
-	public String goToMainPage(Model model, Authentication auth, HttpServletResponse response, HttpServletRequest request)
+	@RequestMapping(value="/goToMainPage", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView goToMainPage(Model model, Authentication auth, HttpServletResponse response, HttpServletRequest request)
 	{
 		String returnUrl = "";
+		ModelAndView mv = new ModelAndView();
+		
 		switch(auth.getAuthorities().toString())
 		{
 			case "[ROLE_ADMIN]" :  
@@ -76,7 +78,9 @@ public class MemberController
 				break;
 		}
 		
-		return returnUrl;
+		mv.addObject("userInfo", "SONG");
+		mv.setViewName(returnUrl);
+		return mv;
 	}
 	
 }

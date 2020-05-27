@@ -17,6 +17,6 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler
 		System.out.println("onAuthenticationSuccess :: " + authentication.getName());
 		
 		request.getSession().setMaxInactiveInterval(60*60); //	1½Ã°£
-		response.sendRedirect("/go/goToMainPage");
+		response.sendRedirect("/goToMainPage");
 	}
 }
