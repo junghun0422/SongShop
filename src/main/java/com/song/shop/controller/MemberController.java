@@ -28,6 +28,12 @@ public class MemberController
 	@Autowired
 	private UserService userService;
 	
+	@RequestMapping("/join-member")
+	public String memberJoin()
+	{
+		return "member_join";
+	}
+	
 	@RequestMapping("/join/checkUser")
 	public @ResponseBody String checkUserId(String user_id)
 	{
@@ -50,7 +56,7 @@ public class MemberController
 	public String login(Model model, HttpServletRequest request, HttpServletResponse response, String loginFail) throws IOException
 	{
 		String auth = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
-		System.out.println(request.getRequestURL());
+		
 		if("[ROLE_ANONYMOUS]".equals(auth))
 		{
 			model.addAttribute("message", "loginFail");

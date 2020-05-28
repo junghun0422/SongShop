@@ -165,6 +165,7 @@
 		$.ajax({
 			url			:	"/join/checkUser",
 			type		:	"post",
+			contentType	:	"application/json",
 			dataType	:	"json",
 			data		:	{ "user_id" : $("#user_id").val() },
 			beforeSend	:	function(xhr)
@@ -181,7 +182,11 @@
 				{
 					alert("다른 아이디를 사용해 주세요.");
 				}
-			}
+			},
+			error:function(request,status,error)
+			{
+  				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+ 			}
 		});
 	});
 

@@ -42,12 +42,6 @@ public class TestController
 	@Resource(name = "codeService")
 	private CodeService codeService;
 	
-	@GetMapping("/")
-	public String index()
-	{	
-		return "index";
-	}
-
 	@RequestMapping("/userList")
 	public @ResponseBody List<UserEntity> userList()
 	{
@@ -78,7 +72,6 @@ public class TestController
 		return groupService.getGroupList();
 	}
 	
-	
 	@RequestMapping("/getGroupParkList")
 	public @ResponseBody List<GroupDto> getGroupParkList()
 	{
@@ -97,13 +90,7 @@ public class TestController
 	{
 		return msg;
 	}
-	
-	@RequestMapping("/join-member")
-	public String memberJoin()
-	{
-		return "main/member_join";
-	}
-	
+
 	@RequestMapping("/checkUser")
 	public @ResponseBody String checkUser(String user_id, String password)
 	{

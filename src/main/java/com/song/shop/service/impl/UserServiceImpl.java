@@ -30,12 +30,12 @@ public class UserServiceImpl implements UserService
 	{
 		Optional<UserEntity> user = userRepository.findById(user_id);
 		
-		if(user != null)
+		if(user.isPresent())
 		{
-			return "OK";
+			return "FAIL";
 		}
 		
-		return "FAIL";
+		return "OK";
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService
 		
 		String input_pwd = EncryptUtils.encryptSHA256(password, user_id.getBytes()).toUpperCase();
 		
-		if(userEntity != null)
+		if(userEntity.isPresent())
 		{
 			if(input_pwd.equals(userEntity.get().getPassword()))
 			{
