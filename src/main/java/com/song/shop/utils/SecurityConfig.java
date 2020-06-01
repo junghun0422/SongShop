@@ -6,7 +6,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.song.shop.security.AuthFailureHandler;
@@ -34,13 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 				.antMatchers("/admin/**").access("ROLE_ADMIN")
 				.antMatchers("/seller/**").access("ROLE_SELLER")
 				.antMatchers("/consumer/**").access("ROLE_CONSUMER")
-				.antMatchers("/", "/login", "/login-error", "/join-member").permitAll()
+				.antMatchers("/", "/login", "/login-error", "/join-member", "/join/*").permitAll()
 				.antMatchers("/**").authenticated();
-		
-		http
-			.csrf();
-//			.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-		
+
 		// ·Î±×ÀÎ
 		http.formLogin()
 			.loginPage("/")
@@ -59,6 +54,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 		
 		http.authenticationProvider(authProvider);
 	}
-	
-	
 }

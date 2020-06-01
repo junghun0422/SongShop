@@ -18,7 +18,7 @@
 	}
 	body
 	{
-	    background-image: url(http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg);
+		background-image: url(http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg);
 	    background-size: cover;
 	    background-repeat: no-repeat;
 	    height: 100%;
@@ -165,27 +165,22 @@
 		$.ajax({
 			url			:	"/join/checkUser",
 			type		:	"post",
-			contentType	:	"application/json",
-			dataType	:	"json",
+			datatype	:	"json",
 			data		:	{ "user_id" : $("#user_id").val() },
 			beforeSend	:	function(xhr)
 			{
+//				데이터를 전송하기 전에 헤더에 csrf값 설정
 				xhr.setRequestHeader(header, token);
 			},
 			success		:	function(result)
 			{
-				if("OK" == result)
-				{
-					alert("사용가능한 아이디 입니다.")
-				}
-				else
-				{
-					alert("다른 아이디를 사용해 주세요.");
-				}
+				alert(result);
 			},
 			error:function(request,status,error)
 			{
-  				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				console.log(request.status);
+				console.log(request.responseText);
+				console.log(error);
  			}
 		});
 	});
@@ -210,7 +205,7 @@
 		$.ajax({
 			url			:	"/join/member",
 			type		:	"post",
-			dataType	:	"json",
+			datatype	:	"json",
 			data		:	param,
 			beforeSend	:	function(xhr)
 			{
@@ -219,7 +214,13 @@
 			success		:	function(result)
 			{
 				alert(result);
-			}
+			},
+			error:function(request,status,error)
+			{
+				console.log(request.status);
+				console.log(request.responseText);
+				console.log(error);
+ 			}
 		});
 	});
 

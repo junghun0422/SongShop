@@ -190,9 +190,11 @@
 
 		$("input").on("blur keyup", function() { $(this).val( $(this).val().replace( /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '' ) ); });
 
-		var message = '${message}';
+
+		// 로그인 실패시 사용할 부분
+/* 		var message = '${message}';
  		var blank_pattern = /^\s+|\s+$/g;
-		if(message.replace(blank_pattern, "") != "") alert(message);
+		if(message.replace(blank_pattern, "") != "") alert(message); */
 	});
 </script>
 </body>

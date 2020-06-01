@@ -14,6 +14,7 @@ import com.song.shop.dto.UserDto;
 import com.song.shop.entity.UserEntity;
 import com.song.shop.repository.UserRepository;
 import com.song.shop.service.UserService;
+import com.song.shop.utils.CyResult;
 import com.song.shop.utils.EncryptUtils;
 
 import lombok.AllArgsConstructor;
@@ -28,14 +29,8 @@ public class UserServiceImpl implements UserService
 	@Override
 	public String checkUserId(String user_id) 
 	{
-		Optional<UserEntity> user = userRepository.findById(user_id);
-		
-		if(user.isPresent())
-		{
-			return "FAIL";
-		}
-		
-		return "OK";
+		if(userRepository.findById(user_id).isPresent()) return "사용불가";
+		else return "사용가능";
 	}
 
 	@Override
