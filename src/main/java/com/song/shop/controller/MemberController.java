@@ -58,9 +58,14 @@ public class MemberController
 	{
 		String auth = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
 		
-		if("[ROLE_ANONYMOUS]".equals(auth))
-		{
-			model.addAttribute("message", "loginFail");
+		
+		if("[ROLE_ANONYMOUS]".equals(auth) )
+		{	
+			if("true".equals(loginFail))
+			{
+				model.addAttribute("message", "로그인 실패");	
+			}
+			
 			return "index";
 		}
 		else return "redirect:/goToMainPage";
@@ -85,7 +90,7 @@ public class MemberController
 				break;
 		}
 		
-		mv.addObject("userInfo", "SONG");
+		mv.addObject("userInfo", SecurityContextHolder.getContext().getAuthentication().getName());
 		mv.setViewName(returnUrl);
 		return mv;
 	}
