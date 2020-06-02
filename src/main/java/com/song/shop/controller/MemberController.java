@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.song.shop.dto.UserDto;
 import com.song.shop.service.UserService;
-import com.song.shop.utils.CyResult;
 
 @Controller
 public class MemberController 
@@ -28,6 +27,19 @@ public class MemberController
 	
 	@Autowired
 	private UserService userService;
+	
+	@RequestMapping(value = { "/login", "/", "//" })
+	public String login(Model model, HttpServletRequest request, HttpServletResponse response, String loginFail) throws IOException
+	{
+		if("[ROLE_ANONYMOUS]".equals(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString()) )
+		{	
+			if("true".equals(loginFail)) model.addAttribute("message", "로그인 실패");
+			return "index";
+		}
+		else return "redirect:/goToMainPage";
+	}
+	
+	
 	
 	@RequestMapping("/join-member")
 	public String memberJoin()
@@ -51,24 +63,6 @@ public class MemberController
 	public @ResponseBody String checkUser(String user_id, String password)
 	{
 		return userService.memberLogin(user_id, password);
-	}
-	
-	@RequestMapping(value = { "/login", "/", "//" })
-	public String login(Model model, HttpServletRequest request, HttpServletResponse response, String loginFail) throws IOException
-	{
-		String auth = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
-		
-		
-		if("[ROLE_ANONYMOUS]".equals(auth) )
-		{	
-			if("true".equals(loginFail))
-			{
-				model.addAttribute("message", "로그인 실패");	
-			}
-			
-			return "index";
-		}
-		else return "redirect:/goToMainPage";
 	}
 	
 	@RequestMapping(value="/goToMainPage", method = { RequestMethod.GET, RequestMethod.POST })

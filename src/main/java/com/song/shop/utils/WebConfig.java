@@ -20,9 +20,6 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 @Configuration
 public class WebConfig implements WebMvcConfigurer
 {
-	@Autowired
-	private HandlerInterceptor handlerInterceptor;
-	
 	@Bean
 	public HttpMessageConverters customConverter()
 	{

@@ -66,7 +66,6 @@ public class UserServiceImpl implements UserService
 	@Override
 	public Optional<UserEntity> selectUser(String user_id) 
 	{
-		return userRepository.findById(user_id);
-		
+		return userRepository.findById(user_id);	
 	}	
 }
