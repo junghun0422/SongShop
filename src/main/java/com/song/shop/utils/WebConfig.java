@@ -1,12 +1,10 @@
 package com.song.shop.utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -65,7 +63,7 @@ public class WebConfig implements WebMvcConfigurer
 	@Override	// 인터셉터 등록
 	public void addInterceptors(InterceptorRegistry registry) 
 	{
-		registry.addInterceptor(localeChangeInterceptor());
+		//registry.addInterceptor(localeChangeInterceptor());
 	}
 	
 	@Bean
@@ -94,5 +92,11 @@ public class WebConfig implements WebMvcConfigurer
 		resolver.setSuffix(".jsp");
 		resolver.setOrder(2);
 		return resolver;
+	}
+	
+	@Bean
+	public LoginCheckFilter loginCheckFilter()
+	{
+		return new LoginCheckFilter();
 	}
 }

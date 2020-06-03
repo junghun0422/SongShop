@@ -80,7 +80,7 @@
 	{
 		//location.replace("/treePage");
 
-		location.replace("/join-member")	
+		location.replace("/member/join-member")	
 	});
 
 	function check()

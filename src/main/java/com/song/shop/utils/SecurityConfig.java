@@ -31,10 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	{
 		http
 			.authorizeRequests()
-				.antMatchers("/admin/**").access("ROLE_ADMIN")
-				.antMatchers("/seller/**").access("ROLE_SELLER")
-				.antMatchers("/consumer/**").access("ROLE_CONSUMER")
-				.antMatchers("/", "/login", "/login-processing", "/logout", "/login-error", "/join-member", "/join/*").permitAll()
+				.antMatchers("/member/admin/**").access("ROLE_ADMIN")
+				.antMatchers("/member/seller/**").access("ROLE_SELLER")
+				.antMatchers("/member/customer/**").access("ROLE_CUSTOMER")
+				.antMatchers("/", "/login", "/login-processing", "/logout", "/login-error", "/member/join-member", "/member/checkUser", "/member/join").permitAll()
 				.antMatchers("/**").authenticated();
 		
 		// ·Î±×ÀÎ

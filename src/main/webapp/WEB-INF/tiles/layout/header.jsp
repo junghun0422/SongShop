@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="lib/scripts/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../lib/scripts/jquery-1.12.4.min.js"></script>
 <style>
 	.footer
 	{

@@ -1,6 +1,9 @@
 package com.song.shop;
 
+import java.io.IOException;
+
 import javax.sql.DataSource;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -10,6 +13,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.xml.sax.SAXException;
+
+import com.song.shop.utils.GoDataUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,8 +24,9 @@ import lombok.extern.slf4j.Slf4j;
 @MapperScan(basePackages = "com.song.shop.mapper")
 public class SongShoppingMallApplication
 {
-	public static void main(String[] args) 
+	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException 
 	{
+		//GoDataUtils.returnGoData();
 		SpringApplication.run(SongShoppingMallApplication.class, args);
 	}
 	

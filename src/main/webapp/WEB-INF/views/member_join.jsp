@@ -163,7 +163,7 @@
 		}
 
 		$.ajax({
-			url			:	"/join/checkUser",
+			url			:	"/member/checkUser",
 			type		:	"post",
 			datatype	:	"json",
 			data		:	{ "user_id" : $("#user_id").val() },
@@ -203,7 +203,7 @@
 		console.log(JSON.stringify(param));
 		
 		$.ajax({
-			url			:	"/join/member",
+			url			:	"/member/join",
 			type		:	"post",
 			datatype	:	"json",
 			data		:	param,
