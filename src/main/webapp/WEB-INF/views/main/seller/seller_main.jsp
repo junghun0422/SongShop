@@ -1,14 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<style>
+	html, body
+	{
+		width	:	100%;
+		height	:	100%:
+	}
+	
+	.container
+	{
+		position			:	absolute;
+		top					:	50%;
+		left				:	50%;
+		margin				:	auto;
+		transform			:	translateX(-50%) translateY(-50%);
+		-moz-transform		:	translateX(-50%) translateY(-50%);  
+		-webkit-transform	:	translateX(-50%) translateY(-50%);  
+		-o-transform		:	translateX(-50%) translateY(-50%);
+		-ms-transform		:	translateX(-50%) translateY(-50%);
+	}
+</style>
 <body>
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-  <h1 class="display-4">판매자 페이지</h1>
-  <!-- <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p> -->
-</div>
 <div class="container">
 	<div class="card-deck mb-3 text-center">
     	<div class="card mb-4 shadow-sm">
       		<div class="card-header">
-        		<h4 class="my-0 font-weight-normal">Free</h4>
+        		<h4 class="my-0 font-weight-normal">상품</h4>
       		</div>
       		<div class="card-body">
         		<h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
@@ -24,7 +40,7 @@
     	
     	<div class="card mb-4 shadow-sm">
       		<div class="card-header">
-        		<h4 class="my-0 font-weight-normal">Pro</h4>
+        		<h4 class="my-0 font-weight-normal">수입 / 통계</h4>
       		</div>
       		<div class="card-body">
 		        <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1>
@@ -40,7 +56,7 @@
     	
 	    <div class="card mb-4 shadow-sm">
 	    	<div class="card-header">
-	        	<h4 class="my-0 font-weight-normal">Enterprise</h4>
+	        	<h4 class="my-0 font-weight-normal">문의</h4>
 	      	</div>
 	      	<div class="card-body">
 	        	<h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
@@ -53,44 +69,6 @@
 	        	<button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>
 	      	</div>
 	    </div>
-	  </div>
-
-	<footer class="pt-4 my-md-5 pt-md-5 border-top">
-    	<div class="row">
-      		<div class="col-12 col-md">
-        		<img class="mb-2" src="/docs/4.5/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
-        		<small class="d-block mb-3 text-muted">© 2017-2020</small>
-      		</div>
-      	<div class="col-6 col-md">
-        	<h5>Features</h5>
-        	<ul class="list-unstyled text-small">
-	          <li><a class="text-muted" href="#">Cool stuff</a></li>
-	          <li><a class="text-muted" href="#">Random feature</a></li>
-	          <li><a class="text-muted" href="#">Team feature</a></li>
-	          <li><a class="text-muted" href="#">Stuff for developers</a></li>
-	          <li><a class="text-muted" href="#">Another one</a></li>
-	          <li><a class="text-muted" href="#">Last time</a></li>
-        	</ul>
-      	</div>
-      	<div class="col-6 col-md">
-        	<h5>Resources</h5>
-	        <ul class="list-unstyled text-small">
-	          <li><a class="text-muted" href="#">Resource</a></li>
-	          <li><a class="text-muted" href="#">Resource name</a></li>
-	          <li><a class="text-muted" href="#">Another resource</a></li>
-	          <li><a class="text-muted" href="#">Final resource</a></li>
-	        </ul>
-      	</div>
-      	<div class="col-6 col-md">
-        	<h5>About</h5>
-	        <ul class="list-unstyled text-small">
-	          <li><a class="text-muted" href="#">Team</a></li>
-	          <li><a class="text-muted" href="#">Locations</a></li>
-	          <li><a class="text-muted" href="#">Privacy</a></li>
-	          <li><a class="text-muted" href="#">Terms</a></li>
-	        </ul>
-      	</div>
-    </div>
-  </footer>
+	</div>
 </div>
 </body>

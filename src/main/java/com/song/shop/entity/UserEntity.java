@@ -1,17 +1,19 @@
 package com.song.shop.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,32 +27,36 @@ public class UserEntity
 	@Column(name = "user_id")
 	private String user_id;
 	
-	@Column(name = "user_nm")
+	@Column(name = "user_nm", nullable = false)
 	private String user_nm;
 	
-	@Column(name = "password")
+	@Column(name = "password", nullable = false)
 	private String password;
 	
-	@Column(name = "email")
+	@Column(name = "email", nullable = false)
 	private String email;
 	
-	@Column(name = "auth_level")
+	@Column(name = "auth_level", nullable = false)
 	private int auth_level;	// 권한등급 :: (0: 관리자, 1: 판매자, 2: 고객)
 	
-	@Column(name = "phone_num")
+	@Column(name = "phone_num", nullable = false)
 	private String phone_num;
 	
-	@Column(name = "zip_code")
+	@Column(name = "zip_code", nullable = false)
 	private String zip_code;
 	
-	@Column(name = "address")
+	@Column(name = "address", nullable = false)
 	private String address;
 	
-	@Column(name = "detail_address")
+	@Column(name = "detail_address", nullable = false)
 	private String detail_address;
 	
-	@Column(name = "regist_dt")
+	@Column(name = "regist_dt", nullable = false)
 	private Timestamp regist_dt;
+	
+	@OneToMany( cascade = CascadeType.REMOVE )
+	@JoinTable( name = "category", joinColumns = @JoinColumn( name = "user_id") )
+	private List<CategoryEntity> categories = new ArrayList<CategoryEntity>();
 	
 	public UserEntity() { }
 	
