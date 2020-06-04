@@ -54,7 +54,7 @@
       		</div>
     	</div>
     	
-	    <div class="card mb-4 shadow-sm">
+	    <div class="card mb-4 shadow-sm" id="inquiry">
 	    	<div class="card-header">
 	        	<h4 class="my-0 font-weight-normal">문의</h4>
 	      	</div>
@@ -72,3 +72,9 @@
 	</div>
 </div>
 </body>
+<script type="text/javascript">
+	$("#inquiry").click(function() 
+	{
+		location.replace("/member/inquiry");
+	});
+</script>

@@ -4,6 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style>
+	html, body
+	{
+		width	:	100%;
+		heigth	:	100%;
+	}
+</style>
 </head>
 <body>
 	<tiles:insertAttribute name="header" />
