@@ -64,6 +64,7 @@ public class WebConfig implements WebMvcConfigurer
 	public void addInterceptors(InterceptorRegistry registry) 
 	{
 		//registry.addInterceptor(localeChangeInterceptor());
+		//registry.addInterceptor(new LoginCheckInterceptor());
 	}
 	
 	@Bean
@@ -92,11 +93,5 @@ public class WebConfig implements WebMvcConfigurer
 		resolver.setSuffix(".jsp");
 		resolver.setOrder(2);
 		return resolver;
-	}
-	
-	@Bean
-	public LoginCheckFilter loginCheckFilter()
-	{
-		return new LoginCheckFilter();
 	}
 }

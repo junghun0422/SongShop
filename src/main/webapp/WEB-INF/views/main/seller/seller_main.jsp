@@ -75,6 +75,6 @@
 <script type="text/javascript">
 	$("#inquiry").click(function() 
 	{
-		location.replace("/member/inquiry");
+		location.replace("/inquiry/goInquiry");
 	});
 </script>

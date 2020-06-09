@@ -28,7 +28,12 @@
 		<div class="input-group">
 			<textarea class="form-control" id="p_content" style="margin-top:500px;"></textarea>
 			<script type="text/javascript">
-				CKEDITOR.replace("p_content", { width : 500, height : 500});
+				var name = '${_csrf.headerName}';
+				var token = '${_csrf.token}';
+				CKEDITOR.replace("p_content", {
+					 width	:	500, height	:	500,
+					 filebrowserUploadUrl	:	"/inquiry/imgUpload?_csrf=" + token
+					 });
 			</script>
 		</div>
 	</div>

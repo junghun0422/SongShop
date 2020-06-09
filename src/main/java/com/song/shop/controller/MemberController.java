@@ -85,10 +85,5 @@ public class MemberController
 		return mv;
 	}
 	
-	@ApiOperation(value = "문의하기")
-	@GetMapping("/inquiry")
-	public String goInquiry()
-	{
-		return "common/inquiry";
-	}
+
 }
