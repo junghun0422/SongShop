@@ -22,19 +22,19 @@
 <body>
 <div class="container">
 	<div class="card-deck mb-3 text-center">
-    	<div class="card mb-4 shadow-sm">
+    	<div class="card mb-4 shadow-sm" id="product">
       		<div class="card-header">
-        		<h4 class="my-0 font-weight-normal">상품</h4>
+        		<h4 class="my-0 font-weight-normal">상품 목록</h4>
       		</div>
       		<div class="card-body">
-        		<h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
+        		<h1 class="card-title pricing-card-title">상품</h1>
         		<ul class="list-unstyled mt-3 mb-4">
-					<li>10 users included</li>
-					<li>2 GB of storage</li>
-					<li>Email support</li>
-					<li>Help center access</li>
-        		</ul>
-        		<button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
+					<li> 상품 등록 </li>
+					<li> 상품 수정 </li>
+					<li> 상품 목록 </li>
+					<li> 상품 삭제 </li>
+				</ul>
+        		<button type="button" class="btn btn-lg btn-block btn-primary">상품목록으로...</button>
       		</div>
     	</div>
     	
@@ -73,8 +73,46 @@
 </div>
 </body>
 <script type="text/javascript">
-	$("#inquiry").click(function() 
+
+	var sellMain = 
 	{
-		location.replace("/inquiry/goInquiry");
+		observe : function() 
+		{
+			$("div").bind("click", function(event) { sellMain.eventControl(event); })
+		},
+		eventControl : function(e) 
+		{
+			switch(e.currentTarget.id)
+			{
+				case "inquiry" :
+					sellMain.movePage("inquiry");
+					e.preventDefault();
+					break;
+				case "product" :
+					sellMain.movePage("product");
+					e.preventDefault();
+					break;
+			}
+		},
+		movePage : function(id)
+		{
+			let	url;
+			switch(id)
+			{
+				case "inquiry" :
+					url = "/inquiry/goInquiry";
+					break;
+				case "product" :
+					url = "/product/goProduct";
+					break;
+			} 
+
+			location.replace(url);
+		}
+	}
+
+	$(function() 
+	{
+		sellMain.observe();
 	});
 </script>

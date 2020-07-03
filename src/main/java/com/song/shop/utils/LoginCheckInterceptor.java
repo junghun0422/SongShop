@@ -15,7 +15,8 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter
 		HttpSession session = request.getSession();
 		
 		String userId = (String) session.getAttribute("userId");
-		if(userId == null)
+		
+		if(userId == null || userId == "")
 		{
 			response.sendRedirect("/");
 			return false;
@@ -33,7 +34,6 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception 
 	{
-
 
 	}
 }

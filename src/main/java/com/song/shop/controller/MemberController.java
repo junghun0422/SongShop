@@ -76,7 +76,8 @@ public class MemberController
 				returnUrl = "seller/seller_main";
 				break;
 			case "[ROLE_CUSTOMER]" : 
-				returnUrl = "customer/customer_main";
+//				returnUrl = "customer/customer_main";
+				returnUrl = "customer/canvas_chart";
 				break;
 		}
 		

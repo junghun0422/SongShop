@@ -24,9 +24,6 @@ import com.song.shop.utils.EncryptUtils;
 @Component("authProvider")
 public class AuthProvider implements AuthenticationProvider 
 {
-//	@Autowired
-//	private UserService userService;
-	
 	@Autowired
 	AuthorizationService authorizationService;
 

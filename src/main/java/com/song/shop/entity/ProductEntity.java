@@ -2,9 +2,12 @@ package com.song.shop.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -47,4 +50,7 @@ public class ProductEntity
 	@Column(name = "category_nm", nullable = false)
 	private String category_nm;
 	
+	@ManyToOne( fetch = FetchType.LAZY )
+	@JoinColumn( name = "category_no" )
+	private CategoryEntity category;
 }

@@ -65,6 +65,8 @@
 </div>
 
 <script type="text/javascript">
+	Kakao.init("a8a5212775ee89de14206fd035f2b5ff");
+
 	var naverLogin = new naver.LoginWithNaverId
 	({
 		cliendId	:	"0hBZHoIXRr7pJgK5UFL0",
@@ -96,6 +98,25 @@
 		else
 			return true;
 	}
+
+	$("#kakao-login-btn").click(function() 
+	{
+		Kakao.Auth.login(
+		{
+			persistAccessToken: true,
+			persistRefreshToken: true,
+			success	:	function(authObj)
+			{
+				console.log(JSON.stringify(authObj));
+				console.log("access :: " + authObj.access_token);
+				console.log("refresh :: " + authObj.refresh_token);
+			},
+			fail	:	function(err)
+			{
+				alert("ERR :: " + JSON.stringify(err));
+			}		
+		});
+	});
 	
 /*
 	window.addEventListener("load", function() 
@@ -117,26 +138,7 @@
 			//else alert("callback 처리 실패!!");
 		});
 	});
-
-
-	$("#kakao-login-btn").click(function() 
-	{
-		Kakao.init("6ed0d6ca2676817edc66eca6454f4c72");
-		Kakao.Auth.login(
-		{
-			persistAccessToken: true,
-			persistRefreshToken: true,
-			success	:	function(authObj)
-			{
-				
-			},
-			fail	:	function(err)
-			{
-				alert("ERR :: " + JSON.stringify(err));
-			}		
-		});
-	});
-	 */
+*/
 	
 
 /* 	$("#loginBtn").click(function() 

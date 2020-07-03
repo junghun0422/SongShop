@@ -28,15 +28,6 @@ public class GroupEntity
 	@Column(name = "disp_ordr")
 	private int dispOrdr;
 	
-	
-	/*
-	 * @Column(name = "group_type") private String groupType;
-	 * 
-	 * @Column(name = "group_seq_ori") private long groupSeqOri;
-	 */
-	
-	public GroupEntity() { }
-
 	@Builder
 	public GroupEntity(long groupSeq, String groupNm, long pGroupSeq, int dispOrdr) {
 		super();

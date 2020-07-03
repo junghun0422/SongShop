@@ -1,23 +1,58 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <style>
+ul
+{
+	list-style : none;
+}
+
 .jumbotron
 {
 	margin-bottom : 0px;
 }
+
+.wrap
+{
+	position			:	absolute;
+	width				:	500px;
+	height				:	500px;
+	top					:	50%;
+	left				:	50%;
+	margin				:	auto;
+	background-color	:	#f8f9fa;
+	transform			:	translateX(-50%) translateY(-50%);
+	-moz-transform		:	translateX(-50%) translateY(-50%);  
+	-webkit-transform	:	translateX(-50%) translateY(-50%);  
+	-o-transform		:	translateX(-50%) translateY(-50%);
+	-ms-transform		:	translateX(-50%) translateY(-50%);
+}
+
+.regi
+{
+	float : right;
+}
+
+.top label
+{
+    font-size : larger;
+    font-weight : bold;
+    margin-top : .5rem;
+}
+
 </style>
 <body>
 	<main role="main">
     	<section class="jumbotron text-center">
 	        <div class="container">
-	        	<h1 class="jumbotron-heading">Song Shoppingmall</h1>
+	        	<!-- <h1 class="jumbotron-heading">Song Shoppingmall</h1> -->
 	        </div>
+	        <button type="button" class="btn btn-danger regi" id="btnRegister">REGISTER</button>
       	</section>
 
 		<div class="album py-5 bg-light">
 			<div class="container">
 				<div class="row">
+				
 					<c:forEach var="i" begin="0" end="8">
 						<div class="col-md-4">
 							<div class="car mb-4 shadow-sm">
@@ -26,7 +61,7 @@
 									<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 									<div class="d-flex justify-content-between align-items-center">
 										<div class="btn-group">
-											<button type="button" class="btn btn-sm btn-outline-secondary">자세히</button>
+											<button type="button" class="btn btn-sm btn-outline-secondary">Detail</button>
 											<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
 										</div>
 									<small class="text-muted">9 mins</small>
@@ -35,8 +70,17 @@
 							</div>
 						</div>
 					</c:forEach>
+					
 				</div>
 			</div>
 		</div>
+
     </main>
+    
+    <script type="text/javascript">
+/* 		$("#btnRegister").click(function() 
+		{
+			$(".fade").css("display", "block");
+		}); */
+	</script>
 </body>

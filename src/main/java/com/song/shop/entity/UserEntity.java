@@ -58,8 +58,6 @@ public class UserEntity
 	@JoinTable( name = "category", joinColumns = @JoinColumn( name = "user_id") )
 	private List<CategoryEntity> categories = new ArrayList<CategoryEntity>();
 	
-	public UserEntity() { }
-	
 	@Builder 
 	public UserEntity(String user_id, String user_nm, String password, String email, int auth_level, String phone_num,
 			String zip_code, String address, String detail_address) {

@@ -37,9 +37,8 @@ public class UserServiceImpl implements UserService
 	public String joinMember(UserDto userDto) 
 	{
 		String pwd = EncryptUtils.encryptSHA256(userDto.getPassword(), userDto.getUser_id().getBytes()).toUpperCase();
-		UserEntity user = userRepository.save(new UserEntity(userDto.getUser_id(), userDto.getUser_nm(), pwd, userDto.getEmail(), userDto.getAuth_level(), 
-				userDto.getPhone_num(), userDto.getZip_code(), userDto.getAddress(), userDto.getDetail_address(), Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()))));
-		return "";
+		return userRepository.save(new UserEntity(userDto.getUser_id(), userDto.getUser_nm(), pwd, userDto.getEmail(), userDto.getAuth_level(), 
+				userDto.getPhone_num(), userDto.getZip_code(), userDto.getAddress(), userDto.getDetail_address(), Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime())))).getUser_id();
 	}
 
 	@Override

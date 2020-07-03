@@ -23,4 +23,5 @@ public class MyAuthentication extends UsernamePasswordAuthenticationToken
         super(user_id, password, grantedAuthorityList);
         this.user = user;
 	}
+	
 }

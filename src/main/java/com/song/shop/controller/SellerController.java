@@ -1,5 +1,9 @@
 package com.song.shop.controller;
 
-public class SellerController {
+import org.springframework.stereotype.Controller;
 
+@Controller
+public class SellerController 
+{
+	
 }

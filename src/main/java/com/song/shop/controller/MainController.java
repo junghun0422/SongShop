@@ -58,7 +58,7 @@ public class MainController
 			if("true".equals(loginFail)) model.addAttribute("message", "로그인 실패");
 			return "index";
 		}
-		else return "redirect:/goToMainPage";
+		else return "redirect:/member/goToMainPage";
 	}
 	
 	
