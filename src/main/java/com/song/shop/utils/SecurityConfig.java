@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	@Override
 	public void configure(WebSecurity web) throws Exception 
 	{
-		// static ���͸��� ���� ���� ����� ���� ���� ( = �׻���� )
+		// static 디렉토리의 하위 파일 목록은 인증 무시 ( = 항상통과 )
 		web.ignoring().antMatchers("/css/**", "/images/**", "/lib/**", "/member/join-member", "/member/checkUser", "/member/join");
 	}
 
@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 				.antMatchers("/", "/login", "/login-processing", "/logout", "/login-error").permitAll()
 				.antMatchers("/**").authenticated();
 		
-		// �α���
+		// 로그인
 		http.formLogin()
 			.loginPage("/")
 			.loginProcessingUrl("/login-processing")
@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 			.successHandler(new AuthSuccessHandler())
 			.failureHandler(new AuthFailureHandler());
 		
-		// �α׾ƿ�
+		// 로그아웃
 		http.logout()
 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 			.logoutSuccessUrl("/")
