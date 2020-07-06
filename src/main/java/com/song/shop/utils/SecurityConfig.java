@@ -23,8 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	@Override
 	public void configure(WebSecurity web) throws Exception 
 	{
-		// static µð·ºÅÍ¸®ÀÇ ÇÏÀ§ ÆÄÀÏ ¸ñ·ÏÀº ÀÎÁõ ¹«½Ã ( = Ç×»óÅë°ú )
-		web.ignoring().antMatchers("/css/**", "/images/**", "/lib/**");
+		// static ï¿½ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ( = ï¿½×»ï¿½ï¿½ï¿½ï¿½ )
+		web.ignoring().antMatchers("/css/**", "/images/**", "/lib/**", "/member/join-member", "/member/checkUser", "/member/join");
 	}
 
 	@Override
@@ -36,10 +36,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 				.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 				.antMatchers("/seller/**").access("hasRole('ROLE_SELLER')")
 				.antMatchers("/customer/**").access("hasRole('ROLE_CUSTOMER')")
-				.antMatchers("/", "/login", "/login-processing", "/logout", "/login-error", "/member/join-member", "/member/checkUser", "/member/join").permitAll()
+				.antMatchers("/", "/login", "/login-processing", "/logout", "/login-error").permitAll()
 				.antMatchers("/**").authenticated();
 		
-		// ·Î±×ÀÎ
+		// ï¿½Î±ï¿½ï¿½ï¿½
 		http.formLogin()
 			.loginPage("/")
 			.loginProcessingUrl("/login-processing")
@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 			.successHandler(new AuthSuccessHandler())
 			.failureHandler(new AuthFailureHandler());
 		
-		// ·Î±×¾Æ¿ô
+		// ï¿½Î±×¾Æ¿ï¿½
 		http.logout()
 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 			.logoutSuccessUrl("/")
