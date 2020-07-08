@@ -55,7 +55,7 @@ ul
 	        <div class="container">
 	        	<!-- <h1 class="jumbotron-heading">Song Shoppingmall</h1> -->
 	        </div>
-	        <button type="button" class="btn btn-danger regi" id="btnRegister" data-toggle="modal" data-target="#myModal">REGISTER</button>
+	        <button type="button" class="btn btn-danger regi" id="btnRegister" data-toggle="modal" data-target="#modalProduct">REGISTER</button>
 		</section>
 
 		<div class="album py-5 bg-light">
@@ -85,12 +85,13 @@ ul
 		</div>
     </main>
 
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<!-- Product Modal -->
+	<div class="modal fade" id="modalProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
   	<div class="modal-content">
     	<div class="modal-header">
     		<h5>상품등록</h5>
-      	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     	</div>
     	<div class="modal-body">
 			<div class="d_0">
@@ -124,8 +125,8 @@ ul
 			</div>
     	</div>
     	<div class="modal-footer">
-    		<button type="button" class="btn btn-warning" data-dismiss="modal">확인</button>
-      	<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+    		<button type="button" class="btn btn-warning productBtn" onclick="checkVal();">확인</button>
+      		<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
     	</div>
   	</div>
 	</div>
@@ -133,7 +134,30 @@ ul
 
 
     <script type="text/javascript">
+		var checkVal = () => 
+		{
+			if($("#product_nm").val() == '')
+			{
+				alert("상품이름을 입력해주세요.");
+				$("#product_nm").focus();
+				return;
+			}
 
+			if($("#product_price").val() == '')
+			{
+				alert("상품가격을 입력해주세요.");
+				$("#product_price").focus();
+				return;
+			}
 
+			if($("#product_img").get(0).files.length < 1)
+			{
+				alert("파일을 선택해주세요.");
+				return;
+			}
+
+			// 등록에 대한 처리 필요			
+			$(".productBtn").attr("data-dismiss", "modal");
+		}
 	</script>
 </body>
