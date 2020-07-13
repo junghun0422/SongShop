@@ -49,13 +49,13 @@ public class MainController
 	@Resource(name = "codeService")
 	private CodeService codeService;
 	
-	@ApiOperation(value = "·Î±×ÀÎ ÆäÀÌÁö")
+	@ApiOperation(value = "ë¡œê·¸ì¸ í˜ì´ì§€")
 	@RequestMapping(value = { "/login", "/", "//" })
 	public String login(Model model, HttpServletRequest request, HttpServletResponse response, String loginFail) throws IOException
 	{
 		if("[ROLE_ANONYMOUS]".equals(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString()) )
 		{	
-			if("true".equals(loginFail)) model.addAttribute("message", "·Î±×ÀÎ ½ÇÆĞ");
+			if("true".equals(loginFail)) model.addAttribute("message", "ë¡œê·¸ì¸ ì‹¤íŒ¨");
 			return "index";
 		}
 		else return "redirect:/member/goToMainPage";

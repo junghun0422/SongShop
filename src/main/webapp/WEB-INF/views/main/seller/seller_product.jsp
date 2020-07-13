@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 <style>
 ul
@@ -49,13 +53,14 @@ ul
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../lib/scripts/jquery-1.12.4.min.js"></script>
+</head>
 <body>
 	<main role="main">
     	<section class="jumbotron text-center">
 	        <div class="container">
 	        	<!-- <h1 class="jumbotron-heading">Song Shoppingmall</h1> -->
 	        </div>
-	        <button type="button" class="btn btn-danger regi" id="btnRegister" data-toggle="modal" data-target="#modalProduct">REGISTER</button>
+	        <button type="button" class="btn btn-danger regi" data-toggle="modal" data-target="#modalProduct">상품등록</button>
 		</section>
 
 		<div class="album py-5 bg-light">
@@ -96,7 +101,7 @@ ul
     	<div class="modal-body">
 			<div class="d_0">
 				<span>구분</span>
-				<select class="form-control">
+				<select class="form-control" id="category_box">
 					<option value="CA01">식품</option>
 					<option value="CA02">주류</option>
 					<option value="CA03">가구</option>
@@ -131,9 +136,8 @@ ul
   	</div>
 	</div>
 	</div>
-
-
     <script type="text/javascript">
+    	var header = "", token = "";
 		var checkVal = () => 
 		{
 			if($("#product_nm").val() == '')
@@ -155,9 +159,81 @@ ul
 				alert("파일을 선택해주세요.");
 				return;
 			}
+			
+			var formData = new FormData(); 
+			formData.append('product_img', $("#product_img").prop("files")[0]);
+			formData.append("category_code", $("#category_box option:selected").val());
+ 			formData.append("product_nm", $("product_nm").val());
+			formData.append("product_price", $("product_price").val());
+			formData.append("proudct_des", $("proudct_des").val());
 
-			// 등록에 대한 처리 필요			
-			$(".productBtn").attr("data-dismiss", "modal");
+			$.ajax(
+			{
+				url 		:	"/seller/registProduct",
+				type		:	"post",
+				dataType	:	"json",
+				data		:	formData,
+			    processData	:	false,
+			    contentType	:	false,
+			    beforeSend	:	function(xhr)
+			    {
+			    	// 데이터를 전송하기 전에 헤더에 csrf값 설정
+					xhr.setRequestHeader(header, token);
+				},
+				success : function(responseData)
+				{
+					console.log("code :: " + responseData.code + ", msg :: " + responseData.message);
+
+					if("00" == responseData.code)
+					{
+						$("[data-dismiss=modal]").trigger({ type: "click" });
+						$("#product_nm").val("");
+						$("#product_price").val("");
+						$("#product_img").val("");
+						$("#proudct_des").val("");
+					}
+					else 
+					{
+						alert("상품정보를 확인해주세요.");
+					}
+				},
+				error : function(xhr, response)
+				{
+					console.log(xhr + " / " + response);
+				}
+			});
 		}
+
+		var searchProductList = () =>
+		{
+			var userInfo = "${userInfo}";
+			console.log("searchProductList start.... :: " + userInfo);
+			
+			$.ajax(
+			{
+				url		:	"/product/product_list/" + userInfo,
+				type	:	"post",
+			    beforeSend	:	function(xhr)
+			    {
+			    	// 데이터를 전송하기 전에 헤더에 csrf값 설정
+					xhr.setRequestHeader(header, token);
+				},
+				success	:	function(responseData)
+				{
+					
+				},
+				error	:	function(xhr, response)
+				{
+
+				}
+			});
+		} 
+
+		$(function() 
+		{
+			token = $("meta[name='_csrf']").attr("content");
+			header =  $("meta[name='_csrf_header']").attr("content");
+			searchProductList();
+		});
 	</script>
 </body>

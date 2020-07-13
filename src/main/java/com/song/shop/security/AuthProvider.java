@@ -41,7 +41,6 @@ public class AuthProvider implements AuthenticationProvider
 		
 		if(!user.isPresent())
 		{
-			System.out.println("[AuthProvider] :: 로그인 정보 없음.");
 			throw new BadCredentialsException("Not Found UserInfo");
 		}
 		List<GrantedAuthority> grantedAuthorityList = new ArrayList<GrantedAuthority>();

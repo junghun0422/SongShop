@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
-import com.song.shop.dto.UserDto;
 import com.song.shop.entity.UserEntity;
 
 import lombok.Data;

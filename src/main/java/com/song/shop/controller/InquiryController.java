@@ -7,12 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -22,33 +24,36 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/inquiry")
 public class InquiryController 
 {
-	@ApiOperation(value = "¹®ÀÇÇÏ±â")
+	@ApiOperation(value = "ë¬¸ì˜í•˜ê¸°")
 	@GetMapping("/goInquiry")
-	public String goInquiryPage()
+	public ModelAndView goInquiryPage()
 	{
-		return "common/inquiry";
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("userInfo", SecurityContextHolder.getContext().getAuthentication().getName());
+		mv.setViewName("common/inquiry");
+		
+		return mv;
 	}
 	
-	@ApiOperation(value = "¹®ÀÇÇÏ±â CKEditor ÀÌ¹ÌÁö ¾÷·Îµå" )
+	@ApiOperation(value = "ë¬¸ì˜í•˜ê¸° CKEditor ì´ë¯¸ì§€ ì—…ë¡œë“œ" )
 	@RequestMapping("/imgUpload")
 	public @ResponseBody String imgUpload(HttpServletRequest request, HttpServletResponse response, MultipartFile upload) throws Exception
 	{
 		String fileName = upload.getOriginalFilename();
 		
 		String uploadPath = request.getServletContext().getRealPath("/upload/inquiry");
-		System.out.println("################################");
-		System.out.println(uploadPath + "/" + fileName);
-		System.out.println("################################");
+		
 		File file = new File(uploadPath + "/" + fileName);
 		
 		try
 		{
 			FileUtils.writeByteArrayToFile(file, upload.getBytes());
-			 return "{ \"uploaded\" : true, \"url\" : \"http://192.168.1.15:8080/upload/editor/" + fileName + "\" }";
+			return "{ \"uploaded\" : true, \"url\" : \"http://192.168.1.15:8080/upload/editor/" + fileName + "\" }";
 		}
 		catch (IOException e) 
 		{
-			return "{ \"uploaded\" : false, \"error\": { \"message\": \"¾÷·Îµå Áß ¿¡·¯°¡ ¹ß»ıÇß½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØ ÁÖ¼¼¿ä.\" } }";
+			return "{ \"uploaded\" : false, \"error\": { \"message\": \"ì—…ë¡œë“œ ì¤‘ ì—ëŸ¬ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•´ ì£¼ì„¸ìš”.\" } }";
 		}
 	}
 }

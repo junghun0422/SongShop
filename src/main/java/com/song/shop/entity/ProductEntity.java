@@ -3,6 +3,7 @@ package com.song.shop.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,13 +45,17 @@ public class ProductEntity
 	@Column(name = "registor_id", nullable = false)
 	private String registor_id;
 	
-	@Column(name = "category_seq", nullable = false)
-	private int category_seq;
+//	@Column(name = "category_seq", nullable = false)
+//	private int category_seq;
+//	
+//	@Column(name = "category_nm", nullable = false)
+//	private String category_nm;
 	
-	@Column(name = "category_nm", nullable = false)
-	private String category_nm;
+//	@ManyToOne( fetch = FetchType.LAZY )
+//	@JoinColumn( name = "category_no", foreignKey = @ForeignKey( name = "fk_product_category" ))
+//	private CategoryEntity category;
 	
-	@ManyToOne( fetch = FetchType.LAZY )
-	@JoinColumn( name = "category_no" )
+	@ManyToOne
+	@JoinColumn( name = "category_seq", foreignKey = @ForeignKey( name = "fk_product_category_seq" ))
 	private CategoryEntity category;
 }

@@ -32,35 +32,35 @@ public class MemberController
 	@Autowired
 	private UserService userService;
 	
-	@ApiOperation(value = "È¸¿ø°¡ÀÔ ÆäÀÌÁö")
+	@ApiOperation(value = "íšŒì›ê°€ì… í˜ì´ì§€")
 	@GetMapping("/join-member")
 	public String memberJoin()
 	{
 		return "member_join";
 	}
 	
-	@ApiOperation(value = "È¸¿ø°¡ÀÔ½Ã ¾ÆÀÌµğ Áßº¹Ã¼Å©")
+	@ApiOperation(value = "íšŒì›ê°€ì…ì‹œ ì•„ì´ë”” ì¤‘ë³µì²´í¬")
 	@PostMapping("/checkUser")
 	public @ResponseBody String checkUserId(String user_id)
 	{
 		return userService.checkUserId(user_id);
 	}
 	
-	@ApiOperation(value = "È¸¿ø°¡ÀÔ")
+	@ApiOperation(value = "íšŒì›ê°€ì…")
 	@PostMapping("/join")
 	public @ResponseBody String joinMember(UserDto userDto)
 	{
 		return userService.joinMember(userDto);
 	}
 	
-	@ApiOperation(value = "·Î±×ÀÎ")
+	@ApiOperation(value = "ë¡œê·¸ì¸")
 	@PostMapping("/login")
 	public @ResponseBody String checkUser(String user_id, String password)
 	{
 		return userService.memberLogin(user_id, password);
 	}
 	
-	@ApiOperation(value = "¸ŞÀÎ ÆäÀÌÁö ÀÌµ¿")
+	@ApiOperation(value = "ë©”ì¸ í˜ì´ì§€ ì´ë™")
 	@GetMapping(value="/goToMainPage")
 	public ModelAndView goToMainPage(Model model, Authentication auth, HttpServletResponse response, HttpServletRequest request)
 	{

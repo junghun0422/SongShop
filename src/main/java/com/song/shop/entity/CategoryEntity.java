@@ -38,9 +38,15 @@ public class CategoryEntity
 	@Column(name = "category_nm", nullable = false)
 	private String category_nm;
 	
-	@OneToMany( cascade = CascadeType.REMOVE, fetch = FetchType.LAZY )
-	@JoinTable( name = "product", joinColumns = @JoinColumn( name = "category_seq" ))
-	private List<ProductEntity> products = new ArrayList<ProductEntity>();
+//	@OneToMany( cascade = CascadeType.REMOVE, fetch = FetchType.LAZY )
+//	@JoinTable( name = "product", joinColumns = @JoinColumn( name = "category_seq" ))
+	@OneToMany( mappedBy = "category", cascade = CascadeType.ALL )
+	private List<ProductEntity> products;
+	
+	
+//	@OneToMany( targetEntity = ProductEntity.class, cascade = CascadeType.ALL )
+//	@JoinColumn( name = "cp_fk", referencedColumnName = "category_seq")
+//	private List<ProductEntity> products;
 		
 	@Builder
 	public CategoryEntity(int category_seq, String registor_id, String category_nm)

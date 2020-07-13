@@ -5,14 +5,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 
-@Api(tags = "Sample API", description = "»ùÇÃ API °¡ÀÌµå")
+@Api(tags = "Sample API", description = "ìƒ˜í”Œ API ê°€ì´ë“œ")
 @RestController
 @RequestMapping("/api/sample")
 public class TestController
 {
-	//@ApiOperation(value = "»ùÇÃ ¸®½ºÆ®", notes = "»ùÇÃ¸®½ºÆ® API")
-	
-	
-	
-	
+	//@ApiOperation(value = "ìƒ˜í”Œ ë¦¬ìŠ¤íŠ¸", notes = "ìƒ˜í”Œë¦¬ìŠ¤íŠ¸ API")
 }
