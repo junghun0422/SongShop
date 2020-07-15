@@ -30,29 +30,28 @@ public class WebConfig implements WebMvcConfigurer
 	{
 		ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
 		
-		// ¸Ş¼¼Áö ÇÁ·ÎÆÛÆ¼ÆÄÀÏÀÇ À§Ä¡È­ ÀÌ¸§À» ÀúÀå
+		// ë©”ì„¸ì§€ í”„ë¡œí¼í‹°íŒŒì¼ì˜ ìœ„ì¹˜í™” ì´ë¦„ì„ ì €ì¥
 		source.setBasename("classpath:/messages/message");
 		
-		// ±âº» ÀÎÄÚµù
+		// ê¸°ë³¸ ì¸ì½”ë”©
 		source.setDefaultEncoding("UTF-8");
 		
-		// ÇÁ·ÎÆÛÆ¼ ÆÄÀÏÀÇ º¯°æÀ» °¨ÁöÇÒ ½Ã°£ °£°İ
+		// í”„ë¡œí¼í‹° íŒŒì¼ì˜ ë³€ê²½ì„ ê°ì§€í•  ì‹œê°„ ê°„ê²©
 		source.setCacheSeconds(60);
 		
-		// ¾ø´Â ¸Ş¼¼ÁöÀÏ °æ¿ì ¿¹¿Ü¸¦ ¹ß»ı½ÃÅ°´Â ´ë½Å ÄÚµå¸¦ ±âº» ¸Ş¼¼Áö·Î 
+		// ì—†ëŠ” ë©”ì„¸ì§€ì¼ ê²½ìš° ì˜ˆì™¸ë¥¼ ë°œìƒì‹œí‚¤ëŠ” ëŒ€ì‹  ì½”ë“œë¥¼ ê¸°ë³¸ ë©”ì„¸ì§€ë¡œ 
 		source.setUseCodeAsDefaultMessage(true);
 		
 		return source;
 	}
 	
-	
-	@Bean	// º¯°æµÈ ¾ğ¾î Á¤º¸¸¦ ±â¾ïÇÒ ·ÎÄÉÀÏ ¸®Á¹¹ö »ı¼º. ¼¼¼Ç¿¡ ÀúÀåÇÏ´Â ¹æ½Ä »ç¿ë
+	@Bean	// ë³€ê²½ëœ ì–¸ì–´ ì •ë³´ë¥¼ ê¸°ì–µí•  ë¡œì¼€ì¼ ë¦¬ì¡¸ë²„ ìƒì„±. ì„¸ì…˜ì— ì €ì¥í•˜ëŠ” ë°©ì‹ ì‚¬ìš©
 	public SessionLocaleResolver localeResolver()
 	{
 		return new SessionLocaleResolver();
 	}
 	
-	@Bean	// ¾ğ¾î º¯°æÀ» À§ÇÑ ÀÎÅÍ¼ÁÅÍ »ı¼º
+	@Bean	// ì–¸ì–´ ë³€ê²½ì„ ìœ„í•œ ì¸í„°ì…‰í„° ìƒì„±
 	public LocaleChangeInterceptor localeChangeInterceptor()
 	{
 		LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
@@ -60,7 +59,7 @@ public class WebConfig implements WebMvcConfigurer
 		return interceptor;
 	}
 
-	@Override	// ÀÎÅÍ¼ÁÅÍ µî·Ï
+	@Override	// ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	public void addInterceptors(InterceptorRegistry registry) 
 	{
 		//registry.addInterceptor(localeChangeInterceptor());

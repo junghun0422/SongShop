@@ -16,47 +16,48 @@ import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
-@Getter
 @Entity
-@Table(name = "user")
+@Setter @Getter
+@Table( name = "user" )
 public class UserEntity 
 {
 	@Id
-	@Column(name = "user_id")
+	@Column( name = "user_id")
 	private String user_id;
 	
-	@Column(name = "user_nm", nullable = false)
+	@Column( name = "user_nm", nullable = false )
 	private String user_nm;
 	
-	@Column(name = "password", nullable = false)
+	@Column( name = "password", nullable = false )
 	private String password;
 	
-	@Column(name = "email", nullable = false)
+	@Column( name = "email", nullable = false )
 	private String email;
 	
-	@Column(name = "auth_level", nullable = false)
-	private int auth_level;	// ±ÇÇÑµî±Þ :: (0: °ü¸®ÀÚ, 1: ÆÇ¸ÅÀÚ, 2: °í°´)
+	@Column( name = "auth_level", nullable = false )
+	private int auth_level;	// ï¿½ï¿½ï¿½Ñµï¿½ï¿½ :: (0: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, 1: ï¿½Ç¸ï¿½ï¿½ï¿½, 2: ï¿½ï¿½)
 	
-	@Column(name = "phone_num", nullable = false)
+	@Column( name = "phone_num", nullable = false )
 	private String phone_num;
 	
-	@Column(name = "zip_code", nullable = false)
+	@Column( name = "zip_code", nullable = false )
 	private String zip_code;
 	
-	@Column(name = "address", nullable = false)
+	@Column( name = "address", nullable = false )
 	private String address;
 	
-	@Column(name = "detail_address", nullable = false)
+	@Column( name = "detail_address", nullable = false )
 	private String detail_address;
 	
-	@Column(name = "regist_dt", nullable = false)
+	@Column( name = "regist_dt", nullable = false )
 	private Timestamp regist_dt;
 	
-	@OneToMany( cascade = CascadeType.REMOVE )
-	@JoinTable( name = "category", joinColumns = @JoinColumn( name = "user_id") )
-	private List<CategoryEntity> categories = new ArrayList<CategoryEntity>();
+//	@OneToMany( cascade = CascadeType.REMOVE )
+//	@JoinTable( name = "category", joinColumns = @JoinColumn( name = "user_id") )
+//	private List<CategoryEntity> categories = new ArrayList<CategoryEntity>();
 	
 	@Builder 
 	public UserEntity(String user_id, String user_nm, String password, String email, int auth_level, String phone_num,
@@ -85,13 +86,6 @@ public class UserEntity
 		this.address = address;
 		this.detail_address = detail_address;
 		this.regist_dt = regist_dt;
-	}
-
-	@Override
-	public String toString() {
-		return "UserEntity [user_id=" + user_id + ", user_nm=" + user_nm + ", password=" + password + ", email=" + email
-				+ ", auth_level=" + auth_level + ", phone_num=" + phone_num + ", zip_code=" + zip_code + ", address="
-				+ address + ", detail_address=" + detail_address + ", regist_dt=" + regist_dt + "]";
 	}
 
 	public String getUser_id() {

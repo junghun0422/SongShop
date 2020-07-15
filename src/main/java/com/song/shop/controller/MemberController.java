@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.song.shop.dto.UserDto;
 import com.song.shop.service.UserService;
+import com.song.shop.utils.CyResult;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -41,14 +42,14 @@ public class MemberController
 	
 	@ApiOperation(value = "회원가입시 아이디 중복체크")
 	@PostMapping("/checkUser")
-	public @ResponseBody String checkUserId(String user_id)
+	public @ResponseBody CyResult<String> checkUserId(String user_id)
 	{
 		return userService.checkUserId(user_id);
 	}
 	
 	@ApiOperation(value = "회원가입")
 	@PostMapping("/join")
-	public @ResponseBody String joinMember(UserDto userDto)
+	public @ResponseBody CyResult<String> joinMember(UserDto userDto)
 	{
 		return userService.joinMember(userDto);
 	}

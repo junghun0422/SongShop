@@ -1,12 +1,12 @@
 package com.song.shop.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
@@ -19,33 +19,45 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.song.shop.dto.ProductDto;
+import com.song.shop.entity.CategoryEntity;
+import com.song.shop.service.ProductService;
+import com.song.shop.utils.CyResult;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/product")
 public class ProductController 
 {
 	private static final Logger log = LoggerFactory.getLogger(ProductController.class);
+
+	@Autowired
+	private ProductService productService;
 	
+	@ApiOperation("상품목록 페이지 이동")
 	@GetMapping("/goProduct")
 	public ModelAndView goProductPage(Model model, Authentication auth)
 	{
+		log.debug(" [ goProduct ] . . . . ");
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("userInfo", SecurityContextHolder.getContext().getAuthentication().getName());
 		mv.setViewName("seller/seller_product");
 		return mv;
 	}
 	
-	@PostMapping(value = "/product_list/{registerId}")
-	public @ResponseBody List<ProductDto> searchProductListByRegisterId(HttpServletRequest request, @PathVariable(value="registerId") String registerId)
+	@ApiOperation("카테고리 목록 조회")
+	@PostMapping( value = "/searchCategoryList")
+	public @ResponseBody CyResult<List<CategoryEntity>> searchCategoryList()
 	{
-		List<ProductDto> list = new ArrayList<>();
-		
-		log.debug("!!!!!!!!!!!!!!!!!!!!!!!");
-		log.debug(registerId);
-		log.debug(request.getRequestURI());
-		log.debug(request.getRequestURL().toString());
-		log.debug("!!!!!!!!!!!!!!!!!!!!!!!");
-		
-		return list;
+		log.debug(" [ searchCategoryList ] . . . . ");
+		return productService.searchCategoryList();
+	}
+	
+	@ApiOperation("사용자별 상품 조회")
+	@PostMapping( value = "/product_list/{registerId}" )
+	public @ResponseBody CyResult<List<ProductDto>> searchProductListByRegisterId(HttpServletRequest request, @PathVariable(value="registerId") String registerId)
+	{
+		log.debug(" [ product_list ] . . . . ");
+		return productService.searchProductListByRegisterId(registerId);
 	}
 }

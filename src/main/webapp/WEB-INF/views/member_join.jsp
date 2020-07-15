@@ -150,10 +150,7 @@
 	<!--container end.//-->
 </body>
 <script>
-
-	var token = ""; 
-	var header = "";
-
+	var check = false;
 	$("#checkBtn").click(function() 
 	{
 		if($("#user_id").val() == "") 
@@ -167,16 +164,16 @@
 			type		:	"post",
 			datatype	:	"json",
 			data		:	{ "user_id" : $("#user_id").val() },
-			beforeSend	:	function(xhr)
+			success		:	function(responseData)
 			{
-//				데이터를 전송하기 전에 헤더에 csrf값 설정
-				xhr.setRequestHeader(header, token);
+				if("00" == responseData.code) 
+				{
+					check = true;
+					alert("사용가능한 아이디입니다.");
+				}
+				else alert("다른 아이디를 입력해주세요.");
 			},
-			success		:	function(result)
-			{
-				alert(result);
-			},
-			error:function(request,status,error)
+			error		:	function(request, status, error)
 			{
 				console.log(request.status);
 				console.log(request.responseText);
@@ -187,6 +184,12 @@
 
 	$("#joinBtn").click(function () 
 	{	
+		if(!check) 
+		{
+			alert("아이디 중복확인을 해주세요.");
+			return;
+		}
+		
 		var param = 
 		{
 			"user_id"	:	$("#user_id").val(),
@@ -207,13 +210,13 @@
 			type		:	"post",
 			datatype	:	"json",
 			data		:	param,
-			beforeSend	:	function(xhr)
+			success		:	function(responseData)
 			{
-				xhr.setRequestHeader(header, token);
-			},
-			success		:	function(result)
-			{
-				alert(result);
+				if("00" == responseData.code && responseData.data == $("#user_id").val())
+				{
+					alert("가입에 성공하셨습니다.\n로그인 페이지로 이동합니다.");
+					location.replace("/");
+				}
 			},
 			error:function(request,status,error)
 			{
@@ -259,12 +262,5 @@
 			top		:	(window.screen.height/2) - (600/2)
 		});
 	});
-
-	$(function() 
-	{
-		token = $("meta[name='_csrf']").attr("content");
-		header =  $("meta[name='_csrf_header']").attr("content");
-	});
-
 </script>
 </html>

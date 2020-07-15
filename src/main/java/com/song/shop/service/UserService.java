@@ -8,9 +8,9 @@ import com.song.shop.utils.CyResult;
 
 public interface UserService 
 { 
-	String checkUserId(String user_id);
+	CyResult<String> checkUserId(String user_id);
 	
-	String joinMember(UserDto userDto);
+	CyResult<String> joinMember(UserDto userDto);
 	
 	String memberLogin(String user_id, String password);
 	

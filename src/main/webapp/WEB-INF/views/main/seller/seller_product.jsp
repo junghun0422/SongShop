@@ -2,8 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <head>
 <meta charset="UTF-8">
-<meta name="_csrf" content="${_csrf.token}"/>
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<%-- <meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/> --%>
 
 <style>
 ul
@@ -101,12 +101,7 @@ ul
     	<div class="modal-body">
 			<div class="d_0">
 				<span>구분</span>
-				<select class="form-control" id="category_box">
-					<option value="CA01">식품</option>
-					<option value="CA02">주류</option>
-					<option value="CA03">가구</option>
-					<option value="ETC">기타</option>
-				</select>
+				<select class="form-control" id="category_box"></select>
 			</div>
 			<div class="d_1">
 		  		<span>상품명 
@@ -137,7 +132,8 @@ ul
 	</div>
 	</div>
     <script type="text/javascript">
-    	var header = "", token = "";
+    	var userInfo = "";
+    	
 		var checkVal = () => 
 		{
 			if($("#product_nm").val() == '')
@@ -161,11 +157,12 @@ ul
 			}
 			
 			var formData = new FormData(); 
-			formData.append('product_img', $("#product_img").prop("files")[0]);
+			formData.append("product_img", $("#product_img").prop("files")[0]);
 			formData.append("category_code", $("#category_box option:selected").val());
- 			formData.append("product_nm", $("product_nm").val());
-			formData.append("product_price", $("product_price").val());
-			formData.append("proudct_des", $("proudct_des").val());
+			formData.append("category_nm", $("#category_box option:selected").text());
+ 			formData.append("product_nm", $("#product_nm").val());
+			formData.append("product_price", $("#product_price").val());
+			formData.append("product_des", $("#proudct_des").val());
 
 			$.ajax(
 			{
@@ -180,7 +177,7 @@ ul
 			    	// 데이터를 전송하기 전에 헤더에 csrf값 설정
 					xhr.setRequestHeader(header, token);
 				},
-				success : function(responseData)
+				success 	:	function(responseData)
 				{
 					console.log("code :: " + responseData.code + ", msg :: " + responseData.message);
 
@@ -197,42 +194,84 @@ ul
 						alert("상품정보를 확인해주세요.");
 					}
 				},
-				error : function(xhr, response)
+				error		:	function(request, status, error)
 				{
-					console.log(xhr + " / " + response);
-				}
+					console.log(request.status);
+					console.log(request.responseText);
+					console.log(error);
+	 			}
+			});
+		}
+
+		var searchCategoryList = () =>
+		{
+			console.log("searchCategoryList start . . . .");
+			$.ajax(
+			{
+				url			:	"/product/searchCategoryList",
+				type		:	"post",
+				beforeSend	:	function(xhr)
+				{
+					xhr.setRequestHeader(header, token);
+				},
+				success		:	function(responseData)
+				{
+					console.log("searchCategoryList resultCode :: " + responseData.code);
+
+					if("00" == responseData.code)
+					{
+						var tag = "";
+						for(var i=0; i<responseData.data.length; i++)
+						{
+							tag += '<option value="' + responseData.data[i].category_code + '">' + responseData.data[i].category_nm + '</option>';
+						}
+
+						$("#category_box").append(tag);
+					}
+				},
+				error		:	function(request, status, error)
+				{
+					console.log(request.status);
+					console.log(request.responseText);
+					console.log(error);
+	 			}
 			});
 		}
 
 		var searchProductList = () =>
 		{
-			var userInfo = "${userInfo}";
 			console.log("searchProductList start.... :: " + userInfo);
 			
 			$.ajax(
 			{
-				url		:	"/product/product_list/" + userInfo,
-				type	:	"post",
+				url			:	"/product/product_list/" + userInfo,
+				type		:	"post",
 			    beforeSend	:	function(xhr)
 			    {
 			    	// 데이터를 전송하기 전에 헤더에 csrf값 설정
 					xhr.setRequestHeader(header, token);
 				},
-				success	:	function(responseData)
+				success		:	function(responseData)
 				{
-					
+					console.log("searchProductList resultCode :: " + responseData.code);
 				},
-				error	:	function(xhr, response)
+				error		:	function(request, status, error)
 				{
-
-				}
+					console.log(request.status);
+					console.log(request.responseText);
+					console.log(error);
+	 			}
 			});
 		} 
 
 		$(function() 
 		{
-			token = $("meta[name='_csrf']").attr("content");
-			header =  $("meta[name='_csrf_header']").attr("content");
+/* 			token = $("meta[name='_csrf']").attr("content");
+			header =  $("meta[name='_csrf_header']").attr("content"); */
+
+			userInfo = "${userInfo}";
+			
+			searchCategoryList();
 			searchProductList();
 		});
 	</script>

@@ -1,17 +1,13 @@
 package com.song.shop.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,38 +18,36 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @Entity
-@Setter
-@Getter
-@Table(name = "Category")
+@Setter @Getter
+@Table( name = "Category" )
 public class CategoryEntity 
 {
 	@Id 
-	@Column(name = "category_seq")
+	@Column(name = "category_code")
 	@GeneratedValue( strategy = GenerationType.IDENTITY)
-	private int category_seq;
-	
-	@Column(name = "registor_id", nullable = false)
-	private String registor_id;
+	private Integer category_code;
 	
 	@Column(name = "category_nm", nullable = false)
 	private String category_nm;
 	
-//	@OneToMany( cascade = CascadeType.REMOVE, fetch = FetchType.LAZY )
-//	@JoinTable( name = "product", joinColumns = @JoinColumn( name = "category_seq" ))
+//	@OneToMany( mappedBy = "category", cascade = CascadeType.ALL )
+//	private List<ProductEntity> products = new ArrayList<>();
+	
 	@OneToMany( mappedBy = "category", cascade = CascadeType.ALL )
-	private List<ProductEntity> products;
+	private Collection<ProductEntity> products;
 	
 	
-//	@OneToMany( targetEntity = ProductEntity.class, cascade = CascadeType.ALL )
-//	@JoinColumn( name = "cp_fk", referencedColumnName = "category_seq")
-//	private List<ProductEntity> products;
-		
 	@Builder
-	public CategoryEntity(int category_seq, String registor_id, String category_nm)
+	public CategoryEntity(Integer category_code, String category_nm)
 	{
-		this.category_seq = category_seq;
-		this.registor_id = registor_id;
+		this.category_code = category_code;
 		this.category_nm = category_nm;
+	}
+	
+	public void addProduct(ProductEntity product)
+	{
+		products.add(product);
+		product.setCategory(this);
 	}
 }
 

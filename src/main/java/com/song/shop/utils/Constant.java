@@ -22,6 +22,11 @@ public class Constant
 	 * 조회된 결과가 없는 경우 data not found....
 	 */
 	public static final String RESULT_FAIL_CODE_02 = "02";
+	
+	/**
+	 * 사용 불가
+	 */
+	public static final String RESULT_FAIL_CODE_03 = "03";
 
 
 	/**
