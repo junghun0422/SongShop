@@ -3,69 +3,79 @@ package com.song.shop.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.annotations.NamedQuery;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
 @Entity
 @Getter @Setter
-@Table(name = "Product")
-public class ProductEntity 
+@Table( name = "Product" )
+@NamedQuery( 
+		name = "ProductEntity.searchProductListByRegisterId",
+		query = "SELECT p FROM ProductEntity p join fetch p.category WHERE p.registerId = :registerId" )
+@ToString( exclude = { "category" } )
+public class ProductEntity
 {
-	@Id
+	@Id @GeneratedValue
 	@Column( name = "product_seq" )
-	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private int product_seq;
+	private int productSeq;
 	
 	@Column( name = "product_nm", nullable = false )
-	private String product_nm;
+	private String productNm;
 	
 	@Column( name = "product_price", nullable = false )
-	private String product_price;
+	private String productPrice;
 	
 	@Column( name = "product_img_path", nullable = false )
-	private String product_img_path;
-	
-//	@Column( name = "product_order_nm", nullable = false )
-//	private int product_order_nm;
-	
+	private String productImgPath;
+
 	@Column( name = "product_des", nullable = false )
-	private String product_des;
+	private String productDes;
 	
 	@Column( name = "register_id", nullable = false )
-	private String register_id;
+	private String registerId;
 	
-
-//	@ManyToOne
-//	@JoinColumn( name = "category_code", foreignKey = @ForeignKey( name = "fk_product_category_code" ))
-//	private CategoryEntity category;
-	
-	@ManyToOne
+	@ManyToOne( fetch = FetchType.LAZY ) // 지연로딩
 	@JoinColumn( name = "category_code" )
+	@JsonIgnore
+	@JsonBackReference
 	private CategoryEntity category;
 	
 	@Builder
-	public ProductEntity(String product_nm, String product_price, String product_img_path, String product_des, String register_id)
+	public ProductEntity(String productNm, String productPrice, String productImgPath, String productDes, String registerId)
 	{
-		this.product_nm = product_nm;
-		this.product_price = product_price;
-		this.product_img_path = product_img_path;
-		this.product_des = product_des;
-		this.register_id = register_id;
+		this.productNm = productNm;
+		this.productPrice = productPrice;
+		this.productImgPath = productImgPath;
+		this.productDes = productDes;
+		this.registerId = registerId;
 	}
 	
 	public void setCategory(CategoryEntity category)
 	{
 		this.category = category;
 	}
+	
+	 @Override
+	 public String toString() 
+	 {
+		 return ToStringBuilder
+				 .reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+	 }
 }

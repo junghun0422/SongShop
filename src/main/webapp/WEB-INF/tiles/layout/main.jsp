@@ -4,8 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="_csrf" content="${_csrf.token}"/>
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<%-- <meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/> --%>
 <style>
 	html, body
 	{
@@ -18,7 +18,7 @@
 	<tiles:insertAttribute name="header" />
 	<tiles:insertAttribute name="body" />
 	<%-- <tiles:insertAttribute name="footer" />	 --%>
-	<script>
+<!-- 	<script>
 		var header = "", token = "";
 
 		$(function()
@@ -26,6 +26,6 @@
 			token = $("meta[name='_csrf']").attr("content");
 			header =  $("meta[name='_csrf_header']").attr("content");
 		});
-	</script>
+	</script> -->
 </body>
 </html>

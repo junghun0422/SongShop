@@ -3,9 +3,11 @@ package com.song.shop.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.song.shop.dto.CategoryDto;
 import com.song.shop.dto.ProductDto;
 import com.song.shop.entity.CategoryEntity;
 import com.song.shop.entity.ProductEntity;
@@ -45,14 +48,17 @@ public class ProductServiceImpl implements ProductService
 	
 	@Autowired
 	private Category_Product_Mapper categoryProductMapper;
+	
+	@Autowired
+	private EntityManager em;
 
 	@Override
 	public CyResult<String> registProduct(Authentication auth, HttpServletRequest request, HttpServletResponse response, ProductDto productDto, MultipartFile product_img) 
 	{
 		CyResult<String> result = new CyResult<>();
 		
-		if(StringUtils.isEmpty(productDto.getCategory_code()) || StringUtils.isEmpty(productDto.getProduct_nm()) ||
-				StringUtils.isEmpty(productDto.getProduct_price()) || product_img.getSize() < 1)
+		if( StringUtils.isEmpty(productDto.getCategory_code()) || StringUtils.isEmpty(productDto.getProduct_nm()) ||
+				StringUtils.isEmpty(productDto.getProduct_price()) || product_img.getSize() < 1 )
 		{
 			result.setCode(Constant.RESULT_FAIL_CODE_01);
 			result.setMessage("필수항목이 누락되었습니다.");
@@ -75,14 +81,13 @@ public class ProductServiceImpl implements ProductService
 		{
 			FileUtils.writeByteArrayToFile(file, product_img.getBytes());
 			
-			// DataBase 작업 필요
 			ProductEntity entity = new ProductEntity();
 			entity.setCategory(new CategoryEntity(Integer.parseInt(productDto.getCategory_code()), productDto.getCategory_nm()));
-			entity.setProduct_nm(productDto.getProduct_nm());
-			entity.setProduct_price(productDto.getProduct_price());
-			entity.setProduct_img_path(file.getAbsolutePath());
-			entity.setProduct_des(productDto.getProduct_des());
-			entity.setRegister_id(auth.getName());
+			entity.setProductNm(productDto.getProduct_nm());
+			entity.setProductPrice(productDto.getProduct_price());
+			entity.setProductImgPath(file.getAbsolutePath());
+			entity.setProductDes(productDto.getProduct_des());
+			entity.setRegisterId(auth.getName());
 			
 			productRepository.save(entity);
 			
@@ -100,13 +105,14 @@ public class ProductServiceImpl implements ProductService
 	}
 
 	@Override
-	public CyResult<List<CategoryEntity>> searchCategoryList() 
+	public CyResult<List<CategoryDto>> searchCategoryList() 
 	{
-		CyResult<List<CategoryEntity>> result = new CyResult<>();;
-				
-		List<CategoryEntity> list = categoryRepository.findAll();
-		
-		if(list.size() < 1)
+		CyResult<List<CategoryDto>> result = new CyResult<>();;
+
+		String jpql = "SELECT new com.song.shop.dto.CategoryDto(c.categoryCode, c.categoryNm) FROM CategoryEntity c";
+		List<CategoryDto> categories = em.createQuery(jpql, CategoryDto.class).getResultList();
+
+		if( categories.size() < 1 )
 		{
 			result.setCode(Constant.RESULT_FAIL_CODE_02);
 			result.setMessage("조회된 결과가 없습니다.");
@@ -115,27 +121,70 @@ public class ProductServiceImpl implements ProductService
 		
 		result.setCode(Constant.RESULT_SUCCESS_CODE);
 		result.setMessage("데이터 조회 성공");
-		result.setData(list);
+		result.setData(categories);
 		
 		return result;
 	}
 
 	@Override
-	public CyResult<List<ProductDto>> searchProductListByRegisterId(String registerId) 
+	public CyResult<List<ProductDto>> searchProductListByRegisterId( String registerId ) 
 	{
 		CyResult<List<ProductDto>> result = new CyResult<>();
 		
 		if( StringUtils.isEmpty( registerId ) )
 		{
-			result.setCode(Constant.RESULT_FAIL_CODE_01);
-			result.setMessage("필수항목이 누락되었습니다.");
+			result.setCode( Constant.RESULT_FAIL_CODE_01 );
+			result.setMessage( "필수항목이 누락되었습니다." );
+			return result;
+		}
+		
+//		List<ProductEntity> productList = productRepository.findByRegisterId( registerId );
+		
+//		String jpql = "SELECT p FROM ProductEntity p join fetch p.category WHERE p.registerId = :registerId";
+//		List<ProductEntity> productList = em.createQuery(jpql, ProductEntity.class)
+//									.setParameter("registerId", registerId)
+//									.getResultList();
+
+		List<ProductEntity> productList = em.createNamedQuery( "ProductEntity.searchProductListByRegisterId", ProductEntity.class )
+											.setParameter( "registerId", registerId )
+											.getResultList();
+		
+		List<ProductDto> list = new ArrayList<>();
+		for(ProductEntity p : productList)
+		{
+			list.add(new ProductDto(String.valueOf(p.getCategory().getCategoryCode()), p.getProductNm(), p.getProductPrice(), p.getProductImgPath(), p.getProductDes()));
+		}
+		
+		if( list.size() < 1 )
+		{
+			result.setCode(Constant.RESULT_FAIL_CODE_02);
+			result.setMessage("조회된 결과가 존재하지 않습니다.");
+			return result;
+		}
+			
+		result.setCode( Constant.RESULT_SUCCESS_CODE );
+		result.setMessage( "상품 목록 조회 성공" );
+		result.setData( list );
+
+		return result;
+	}
+
+	@Override
+	public CyResult<List<ProductEntity>> testProductListByRegisterId(String registerId) 
+	{
+		CyResult<List<ProductEntity>> result = new CyResult<>();
+		
+		if( StringUtils.isEmpty( registerId ) )
+		{
+			result.setCode( Constant.RESULT_FAIL_CODE_01 );
+			result.setMessage( "필수항목이 누락되었습니다." );
 			return result;
 		}
 
-//		List<ProductEntity> productList = productRepositorySupport.findByRegisterId( registerId );
-		
-		List<ProductDto> productList = categoryProductMapper.searchProductListByRegisterId(registerId);
-		
+		List<ProductEntity> productList = em.createNamedQuery( "ProductEntity.searchProductListByRegisterId", ProductEntity.class )
+											.setParameter( "registerId", registerId )
+											.getResultList();
+
 		if( productList.size() < 1 )
 		{
 			result.setCode(Constant.RESULT_FAIL_CODE_02);
@@ -143,11 +192,10 @@ public class ProductServiceImpl implements ProductService
 			return result;
 		}
 			
-		result.setCode(Constant.RESULT_SUCCESS_CODE);
-		result.setMessage("상품 목록 조회 성공");
-		result.setData(productList);
-		
+		result.setCode( Constant.RESULT_SUCCESS_CODE );
+		result.setMessage( "상품 목록 조회 성공" );
+		result.setData( productList );
+
 		return result;
-	}
-	
+	}	
 }

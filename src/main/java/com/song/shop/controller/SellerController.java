@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,7 +32,7 @@ public class SellerController
 	private ProductService productService;
 	
 	@ApiOperation("상품등록")
-	@RequestMapping(value = "/registProduct", headers = "Content-Type=multipart/form-data", method = RequestMethod.POST)
+	@PostMapping( value = "/registProduct", headers = "Content-Type=multipart/form-data" )
 	public @ResponseBody CyResult<String> registProduct(Authentication auth, HttpServletRequest request, HttpServletResponse response, ProductDto productDto, MultipartFile product_img)
 	{
 		return productService.registProduct(auth, request, response, productDto, product_img);

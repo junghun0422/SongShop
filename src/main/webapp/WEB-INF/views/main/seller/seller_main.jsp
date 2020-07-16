@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <style>
 	html, body
 	{
@@ -24,17 +25,17 @@
 	<div class="card-deck mb-3 text-center">
     	<div class="card mb-4 shadow-sm" id="product">
       		<div class="card-header">
-        		<h4 class="my-0 font-weight-normal">상품 목록</h4>
+        		<h4 class="my-0 font-weight-normal"><spring:message code="product.list" javaScriptEscape="true" /></h4>
       		</div>
       		<div class="card-body">
-        		<h1 class="card-title pricing-card-title">상품</h1>
+        		<h1 class="card-title pricing-card-title"><spring:message code="product" javaScriptEscape="true"  /></h1>
         		<ul class="list-unstyled mt-3 mb-4">
-					<li> 상품 등록 </li>
-					<li> 상품 수정 </li>
-					<li> 상품 목록 </li>
-					<li> 상품 삭제 </li>
+					<li> <spring:message code="product.list" javaScriptEscape="true" /> </li>
+					<li> <spring:message code="product.register" javaScriptEscape="true" /> </li>
+					<li> <spring:message code="product.update" javaScriptEscape="true" /> </li>
+					<li> <spring:message code="product.delete" javaScriptEscape="true" /> </li>
 				</ul>
-        		<button type="button" class="btn btn-lg btn-block btn-primary">상품목록으로...</button>
+        		<button type="button" class="btn btn-lg btn-block btn-primary"><spring:message code="product.list" javaScriptEscape="true" />으로 . . .</button>
       		</div>
     	</div>
     	

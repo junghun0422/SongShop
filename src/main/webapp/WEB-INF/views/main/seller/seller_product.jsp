@@ -2,8 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <head>
 <meta charset="UTF-8">
-<%-- <meta name="_csrf" content="${_csrf.token}"/>
-<meta name="_csrf_header" content="${_csrf.headerName}"/> --%>
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 <style>
 ul
@@ -132,7 +132,7 @@ ul
 	</div>
 	</div>
     <script type="text/javascript">
-    	var userInfo = "";
+    	var header = "", token = "", userInfo = "";
     	
 		var checkVal = () => 
 		{
@@ -223,7 +223,7 @@ ul
 						var tag = "";
 						for(var i=0; i<responseData.data.length; i++)
 						{
-							tag += '<option value="' + responseData.data[i].category_code + '">' + responseData.data[i].category_nm + '</option>';
+							tag += '<option value="' + responseData.data[i].categoryCode + '">' + responseData.data[i].categoryNm + '</option>';
 						}
 
 						$("#category_box").append(tag);
@@ -254,6 +254,7 @@ ul
 				success		:	function(responseData)
 				{
 					console.log("searchProductList resultCode :: " + responseData.code);
+					console.log("searchProductList resultData.length :: " + responseData.data.length);
 				},
 				error		:	function(request, status, error)
 				{
@@ -264,15 +265,43 @@ ul
 			});
 		} 
 
+		var testproductList = () => 
+		{
+			console.log("testproductList start.... :: " + userInfo);
+			
+			$.ajax(
+			{
+				url			:	"/product/test_list/" + userInfo,
+				type		:	"post",
+			    beforeSend	:	function(xhr)
+			    {
+			    	// 데이터를 전송하기 전에 헤더에 csrf값 설정
+					xhr.setRequestHeader(header, token);
+				},
+				success		:	function(responseData)
+				{
+					console.log("testproductList resultCode :: " + responseData.code);
+					console.log("testproductList resultData.length :: " + responseData.data.length);
+				},
+				error		:	function(request, status, error)
+				{
+					console.log(request.status);
+					console.log(request.responseText);
+					console.log(error);
+	 			}
+			});
+		}
+
 		$(function() 
 		{
-/* 			token = $("meta[name='_csrf']").attr("content");
-			header =  $("meta[name='_csrf_header']").attr("content"); */
+ 			token = $("meta[name='_csrf']").attr("content");
+			header =  $("meta[name='_csrf_header']").attr("content");
 
 			userInfo = "${userInfo}";
 			
 			searchCategoryList();
-			searchProductList();
+			//searchProductList();
+			testproductList();
 		});
 	</script>
 </body>

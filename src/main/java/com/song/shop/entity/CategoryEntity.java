@@ -1,53 +1,64 @@
 package com.song.shop.entity;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
 @Entity
-@Setter @Getter
+@Setter @Getter 
 @Table( name = "Category" )
-public class CategoryEntity 
+@ToString( exclude = { "products" } )
+public class CategoryEntity
 {
-	@Id 
+	@Id @GeneratedValue 
 	@Column(name = "category_code")
-	@GeneratedValue( strategy = GenerationType.IDENTITY)
-	private Integer category_code;
+	private Integer categoryCode;
 	
 	@Column(name = "category_nm", nullable = false)
-	private String category_nm;
+	private String categoryNm;
 	
-//	@OneToMany( mappedBy = "category", cascade = CascadeType.ALL )
-//	private List<ProductEntity> products = new ArrayList<>();
-	
-	@OneToMany( mappedBy = "category", cascade = CascadeType.ALL )
-	private Collection<ProductEntity> products;
-	
+	@OneToMany( mappedBy = "category" )
+	@JsonIgnore
+	@JsonManagedReference
+	private List<ProductEntity> products = new ArrayList<>();
 	
 	@Builder
-	public CategoryEntity(Integer category_code, String category_nm)
+	public CategoryEntity(Integer categoryCode, String categoryNm)
 	{
-		this.category_code = category_code;
-		this.category_nm = category_nm;
+		this.categoryCode = categoryCode;
+		this.categoryNm = categoryNm;
 	}
 	
 	public void addProduct(ProductEntity product)
 	{
-		products.add(product);
 		product.setCategory(this);
+		products.add(product);
 	}
+	
+	 @Override
+	 public String toString() 
+	 {
+		 return ToStringBuilder
+				 .reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+	 }
 }
 

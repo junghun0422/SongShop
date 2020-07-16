@@ -1,10 +1,13 @@
 package com.song.shop.utils;
 
+import java.util.Locale;
+
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -14,6 +17,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer
@@ -42,6 +48,9 @@ public class WebConfig implements WebMvcConfigurer
 		// 없는 메세지일 경우 예외를 발생시키는 대신 코드를 기본 메세지로 
 		source.setUseCodeAsDefaultMessage(true);
 		
+		// 제공하지 않는 언어로 요청이 들어왔을 때 MessageSource에서 사용하 기본 언어 정보.
+		Locale.setDefault(Locale.KOREAN);
+		
 		return source;
 	}
 	
@@ -59,13 +68,17 @@ public class WebConfig implements WebMvcConfigurer
 		return interceptor;
 	}
 
-	@Override	// ���ͼ��� ���
+	@Override	
 	public void addInterceptors(InterceptorRegistry registry) 
 	{
 		//registry.addInterceptor(localeChangeInterceptor());
 		//registry.addInterceptor(new LoginCheckInterceptor());
 	}
 	
+	/**
+	 * Tiles 관련 설정....
+	 * @return
+	 */
 	@Bean
 	public TilesConfigurer tilesConfigurer()
 	{

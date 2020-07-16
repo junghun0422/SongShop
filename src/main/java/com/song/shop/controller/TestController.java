@@ -24,7 +24,7 @@ public class TestController
 	public void insertCategory(String category_nm)
 	{
 		CategoryEntity cate = new CategoryEntity();
-		cate.setCategory_nm(category_nm);
+		cate.setCategoryNm(category_nm);
 		categoryRespoitory.save(cate);
 	}
 }

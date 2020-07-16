@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.song.shop.dto.CategoryDto;
 import com.song.shop.dto.ProductDto;
 import com.song.shop.entity.CategoryEntity;
+import com.song.shop.entity.ProductEntity;
 import com.song.shop.service.ProductService;
 import com.song.shop.utils.CyResult;
 
@@ -47,7 +49,7 @@ public class ProductController
 	
 	@ApiOperation("카테고리 목록 조회")
 	@PostMapping( value = "/searchCategoryList")
-	public @ResponseBody CyResult<List<CategoryEntity>> searchCategoryList()
+	public @ResponseBody CyResult<List<CategoryDto>> searchCategoryList()
 	{
 		log.debug(" [ searchCategoryList ] . . . . ");
 		return productService.searchCategoryList();
@@ -55,9 +57,17 @@ public class ProductController
 	
 	@ApiOperation("사용자별 상품 조회")
 	@PostMapping( value = "/product_list/{registerId}" )
-	public @ResponseBody CyResult<List<ProductDto>> searchProductListByRegisterId(HttpServletRequest request, @PathVariable(value="registerId") String registerId)
+	public @ResponseBody CyResult<List<ProductDto>> searchProductListByRegisterId(@PathVariable(value="registerId") String registerId)
 	{
 		log.debug(" [ product_list ] . . . . ");
 		return productService.searchProductListByRegisterId(registerId);
+	}
+	
+	@ApiOperation( "테스트 상품 조회" )
+	@PostMapping("/test_list/{registerId}")
+	public @ResponseBody CyResult<List<ProductEntity>> testProductListByRegisterId( @PathVariable( value = "registerId" ) String registerId )
+	{
+		log.debug(" [ test_list ] . . . . ");
+		return productService.testProductListByRegisterId(registerId);
 	}
 }
