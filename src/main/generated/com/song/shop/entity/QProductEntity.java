@@ -24,19 +24,17 @@ public class QProductEntity extends EntityPathBase<ProductEntity> {
 
     public final QCategoryEntity category;
 
-    public final StringPath product_describe = createString("product_describe");
+    public final StringPath productDes = createString("productDes");
 
-    public final StringPath product_img_path = createString("product_img_path");
+    public final StringPath productImgPath = createString("productImgPath");
 
-    public final StringPath product_nm = createString("product_nm");
+    public final StringPath productNm = createString("productNm");
 
-    public final NumberPath<Integer> product_order_nm = createNumber("product_order_nm", Integer.class);
+    public final StringPath productPrice = createString("productPrice");
 
-    public final StringPath product_price = createString("product_price");
+    public final NumberPath<Integer> productSeq = createNumber("productSeq", Integer.class);
 
-    public final NumberPath<Integer> product_seq = createNumber("product_seq", Integer.class);
-
-    public final StringPath registor_id = createString("registor_id");
+    public final StringPath registerId = createString("registerId");
 
     public QProductEntity(String variable) {
         this(ProductEntity.class, forVariable(variable), INITS);

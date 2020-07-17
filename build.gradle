@@ -78,6 +78,9 @@ dependencies {
 
 	compile group: 'commons-io', name: 'commons-io', version: '2.7'
 	
+	// entity TO dto convert
+	compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
+	
 	compileOnly "org.projectlombok:lombok"
    	annotationProcessor 'org.projectlombok:lombok'
    	

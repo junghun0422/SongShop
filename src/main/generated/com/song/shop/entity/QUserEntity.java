@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -23,8 +22,6 @@ public class QUserEntity extends EntityPathBase<UserEntity> {
     public final StringPath address = createString("address");
 
     public final NumberPath<Integer> auth_level = createNumber("auth_level", Integer.class);
-
-    public final ListPath<CategoryEntity, QCategoryEntity> categories = this.<CategoryEntity, QCategoryEntity>createList("categories", CategoryEntity.class, QCategoryEntity.class, PathInits.DIRECT2);
 
     public final StringPath detail_address = createString("detail_address");
 

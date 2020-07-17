@@ -21,6 +21,4 @@ public interface ProductService
 	CyResult<List<CategoryDto>> searchCategoryList();
 	
 	CyResult<List<ProductDto>> searchProductListByRegisterId( String registerId );
-	
-	CyResult<List<ProductEntity>> testProductListByRegisterId( String registerId );
 }

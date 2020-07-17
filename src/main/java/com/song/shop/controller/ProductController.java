@@ -62,12 +62,4 @@ public class ProductController
 		log.debug(" [ product_list ] . . . . ");
 		return productService.searchProductListByRegisterId(registerId);
 	}
-	
-	@ApiOperation( "테스트 상품 조회" )
-	@PostMapping("/test_list/{registerId}")
-	public @ResponseBody CyResult<List<ProductEntity>> testProductListByRegisterId( @PathVariable( value = "registerId" ) String registerId )
-	{
-		log.debug(" [ test_list ] . . . . ");
-		return productService.testProductListByRegisterId(registerId);
-	}
 }

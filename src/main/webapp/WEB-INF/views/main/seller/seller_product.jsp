@@ -255,6 +255,11 @@ ul
 				{
 					console.log("searchProductList resultCode :: " + responseData.code);
 					console.log("searchProductList resultData.length :: " + responseData.data.length);
+					console.log(responseData.data);
+					for( var i=0; i<responseData.data.length; i++ )
+					{
+						console.log(responseData.data[i].categoryNm + " | " + responseData.data[i].categoryCode + ", " + responseData.data[i].productNm + " | " + responseData.data[i].productPrice);
+					}
 				},
 				error		:	function(request, status, error)
 				{
@@ -265,33 +270,6 @@ ul
 			});
 		} 
 
-		var testproductList = () => 
-		{
-			console.log("testproductList start.... :: " + userInfo);
-			
-			$.ajax(
-			{
-				url			:	"/product/test_list/" + userInfo,
-				type		:	"post",
-			    beforeSend	:	function(xhr)
-			    {
-			    	// 데이터를 전송하기 전에 헤더에 csrf값 설정
-					xhr.setRequestHeader(header, token);
-				},
-				success		:	function(responseData)
-				{
-					console.log("testproductList resultCode :: " + responseData.code);
-					console.log("testproductList resultData.length :: " + responseData.data.length);
-				},
-				error		:	function(request, status, error)
-				{
-					console.log(request.status);
-					console.log(request.responseText);
-					console.log(error);
-	 			}
-			});
-		}
-
 		$(function() 
 		{
  			token = $("meta[name='_csrf']").attr("content");
@@ -300,8 +278,7 @@ ul
 			userInfo = "${userInfo}";
 			
 			searchCategoryList();
-			//searchProductList();
-			testproductList();
+			searchProductList();
 		});
 	</script>
 </body>

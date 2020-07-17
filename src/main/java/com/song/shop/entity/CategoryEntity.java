@@ -37,7 +37,6 @@ public class CategoryEntity
 	private String categoryNm;
 	
 	@OneToMany( mappedBy = "category" )
-	@JsonIgnore
 	@JsonManagedReference
 	private List<ProductEntity> products = new ArrayList<>();
 	

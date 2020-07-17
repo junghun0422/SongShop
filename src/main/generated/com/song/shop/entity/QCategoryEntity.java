@@ -20,13 +20,11 @@ public class QCategoryEntity extends EntityPathBase<CategoryEntity> {
 
     public static final QCategoryEntity categoryEntity = new QCategoryEntity("categoryEntity");
 
-    public final StringPath category_nm = createString("category_nm");
+    public final NumberPath<Integer> categoryCode = createNumber("categoryCode", Integer.class);
 
-    public final NumberPath<Integer> category_seq = createNumber("category_seq", Integer.class);
+    public final StringPath categoryNm = createString("categoryNm");
 
     public final ListPath<ProductEntity, QProductEntity> products = this.<ProductEntity, QProductEntity>createList("products", ProductEntity.class, QProductEntity.class, PathInits.DIRECT2);
-
-    public final StringPath registor_id = createString("registor_id");
 
     public QCategoryEntity(String variable) {
         super(CategoryEntity.class, forVariable(variable));

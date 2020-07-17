@@ -53,7 +53,6 @@ public class ProductEntity
 	
 	@ManyToOne( fetch = FetchType.LAZY ) // 지연로딩
 	@JoinColumn( name = "category_code" )
-	@JsonIgnore
 	@JsonBackReference
 	private CategoryEntity category;
 	
