@@ -84,7 +84,6 @@ ul
 							</div>
 						</div>
 					</c:forEach>
-					
 				</div>
 			</div>
 		</div>
@@ -270,6 +269,36 @@ ul
 			});
 		} 
 
+		var repositoryProductList = () =>
+		{
+			console.log("testList start.... :: " + userInfo);
+			
+			$.ajax(
+			{
+				url			:	"/product/testList/" + userInfo,
+				type		:	"post",
+			    beforeSend	:	function(xhr)
+			    {
+			    	// 데이터를 전송하기 전에 헤더에 csrf값 설정
+					xhr.setRequestHeader(header, token);
+				},
+				success		:	function(responseData)
+				{
+					console.log(responseData);
+					for(var i=0; i<responseData.length; i++)
+					{
+						console.log(responseData[i].categoryNm + "(" + responseData[i].categoryCode + ") => " + responseData[i].productNm + "_" + responseData[i].productPrice);
+					}
+				},
+				error		:	function(request, status, error)
+				{
+					console.log(request.status);
+					console.log(request.responseText);
+					console.log(error);
+	 			}
+			});
+		} 
+
 		$(function() 
 		{
  			token = $("meta[name='_csrf']").attr("content");
@@ -278,6 +307,7 @@ ul
 			userInfo = "${userInfo}";
 			
 			searchCategoryList();
+			//repositoryProductList();
 			searchProductList();
 		});
 	</script>

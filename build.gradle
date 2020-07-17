@@ -25,6 +25,7 @@ plugins {
 group = 'com.shop'
 version = '1.0-SNAPSHOT'
 sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
 configurations {
    compileOnly {
@@ -34,6 +35,10 @@ configurations {
 
 repositories {
 	mavenCentral()
+}
+
+war {
+	baseName = 'spring-boot-war'
 }
 
 dependencies {
@@ -46,6 +51,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	
+	// 주로 캐쉬 기능을 꺼놓거나 자동 재구동 등의 기능
 	implementation 'org.springframework.boot:spring-boot-devtools'
 	
 	implementation 'org.mybatis:mybatis-spring:1.3.1'
@@ -68,6 +74,7 @@ dependencies {
 	
 	implementation 'javax.servlet:jstl:1.2'
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	
 	implementation 'org.apache.tiles:tiles-jsp:3.0.8'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	

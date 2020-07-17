@@ -11,6 +11,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.xml.sax.SAXException;
@@ -22,8 +24,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SpringBootApplication
 @MapperScan(basePackages = "com.song.shop.mapper")
-public class SongShoppingMallApplication
+public class SongShoppingMallApplication // extends SpringBootServletInitializer
 {
+//	@Override
+//	protected SpringApplicationBuilder configure(SpringApplicationBuilder application)
+//	{
+//		return application.sources(SongShoppingMallApplication.class);
+//	}
+//	
 	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException 
 	{
 		//GoDataUtils.returnGoData();

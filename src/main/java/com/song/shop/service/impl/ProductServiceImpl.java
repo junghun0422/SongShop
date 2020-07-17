@@ -17,6 +17,8 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -149,17 +151,11 @@ public class ProductServiceImpl implements ProductService
 //		List<ProductEntity> productList = em.createNamedQuery( "ProductEntity.searchProductListByRegisterId", ProductEntity.class )
 //											.setParameter( "registerId", registerId )
 //											.getResultList();
-		
-		List<ProductEntity> productList = productRepositorySupport.findByRegisterId( registerId );
 
-		List<ProductDto> list = new ArrayList<>();
 		ModelMapper mapper = new ModelMapper();
-		
-		for( ProductEntity p : productList )
-		{
-			list.add( mapper.map( p, ProductDto.class ) );
-		}
-		
+		List<ProductDto> list = new ArrayList<>();
+		productRepositorySupport.findByRegisterId( registerId ).forEach( e -> list.add( mapper.map( e, ProductDto.class ) ) );
+
 		if( list.size() < 1 )
 		{
 			result.setCode(Constant.RESULT_FAIL_CODE_02);
@@ -172,5 +168,15 @@ public class ProductServiceImpl implements ProductService
 		result.setData( list );
 
 		return result;
-	}	
+	}
+
+	@Override
+	public ResponseEntity<List<ProductDto>> repositoryProductList( String registerId ) 
+	{
+		List<ProductDto> products = new ArrayList<>();
+		ModelMapper mapper = new ModelMapper();
+		productRepository.findByRegisterId( registerId )
+			.forEach(e -> products.add( mapper.map( e, ProductDto.class ) ) ); 
+		return new ResponseEntity<List<ProductDto>> (products, HttpStatus.OK);
+	}
 }

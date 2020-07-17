@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,4 +22,6 @@ public interface ProductService
 	CyResult<List<CategoryDto>> searchCategoryList();
 	
 	CyResult<List<ProductDto>> searchProductListByRegisterId( String registerId );
+	
+	ResponseEntity<List<ProductDto>> repositoryProductList( String registerId );
 }
