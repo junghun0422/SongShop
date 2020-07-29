@@ -20,7 +20,7 @@ public class QCategoryEntity extends EntityPathBase<CategoryEntity> {
 
     public static final QCategoryEntity categoryEntity = new QCategoryEntity("categoryEntity");
 
-    public final NumberPath<Integer> categoryCode = createNumber("categoryCode", Integer.class);
+    public final NumberPath<Long> categoryCode = createNumber("categoryCode", Long.class);
 
     public final StringPath categoryNm = createString("categoryNm");
 

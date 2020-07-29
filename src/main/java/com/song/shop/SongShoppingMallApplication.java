@@ -15,6 +15,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 import org.xml.sax.SAXException;
 
 import com.song.shop.utils.GoDataUtils;
@@ -53,4 +56,17 @@ public class SongShoppingMallApplication // extends SpringBootServletInitializer
 	{
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder()
+	{
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
+	
+	@Bean
+	public RestTemplate getRestTemplate()
+	{
+		return new RestTemplate();
+	}
+	
 }

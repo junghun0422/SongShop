@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,11 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import com.song.shop.dto.UserDto;
 import com.song.shop.entity.UserEntity;
-import com.song.shop.service.UserService;
-import com.song.shop.utils.CyResult;
-import com.song.shop.utils.EncryptUtils;
 
 @Component("authProvider")
 public class AuthProvider implements AuthenticationProvider 
@@ -28,20 +23,20 @@ public class AuthProvider implements AuthenticationProvider
 	AuthorizationService authorizationService;
 
 	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException 
+	public Authentication authenticate( Authentication authentication ) throws AuthenticationException 
 	{
 		String user_id = authentication.getName();
 		String password = authentication.getCredentials().toString();
-		return authenticate(user_id, password);
+		return authenticate( user_id, password );
 	}
 	
-	public Authentication authenticate(String user_id, String password) throws AuthenticationException
+	public Authentication authenticate( String user_id, String password ) throws AuthenticationException
 	{
-		Optional<UserEntity> user = authorizationService.login(user_id, password);
+		Optional<UserEntity> user = authorizationService.login( user_id, password );
 		
-		if(!user.isPresent())
+		if( !user.isPresent() )
 		{
-			throw new BadCredentialsException("Not Found UserInfo");
+			throw new BadCredentialsException( "Not Found UserInfo" );
 		}
 		List<GrantedAuthority> grantedAuthorityList = new ArrayList<GrantedAuthority>();
 		String role = "";
@@ -58,13 +53,13 @@ public class AuthProvider implements AuthenticationProvider
 				break;
 		}
 		
-		grantedAuthorityList.add(new SimpleGrantedAuthority(role));
-		return new MyAuthentication(user_id, password, grantedAuthorityList, user);
+		grantedAuthorityList.add( new SimpleGrantedAuthority( role ) );
+		return new MyAuthentication( user_id, password, grantedAuthorityList, user );
 	}
 
 	@Override
-	public boolean supports(Class<?> authentication) 
+	public boolean supports( Class<?> authentication ) 
 	{
-		return authentication.equals(UsernamePasswordAuthenticationToken.class);
+		return authentication.equals( UsernamePasswordAuthenticationToken.class );
 	}
 }

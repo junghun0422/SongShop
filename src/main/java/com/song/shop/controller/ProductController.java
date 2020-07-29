@@ -43,7 +43,7 @@ public class ProductController
 	@Autowired
 	private ProductRepositorySupport productRepositorySupport;
 	
-	@ApiOperation( "상품목록 페이지 이동" )
+	@ApiOperation( value = "상품목록 페이지", notes = "상품목록 페이지 이동" )
 	@GetMapping( "/goProduct" )
 	public ModelAndView goProductPage( Model model, Authentication auth )
 	{
@@ -52,7 +52,8 @@ public class ProductController
 		
 		ModelMapper mapper = new ModelMapper();
 		List<ProductDto> list = new ArrayList<>();
-		productRepositorySupport.findByRegisterId( SecurityContextHolder.getContext().getAuthentication().getName() ).forEach( e -> list.add( mapper.map( e, ProductDto.class ) ) );
+		productRepositorySupport.findByRegisterId( SecurityContextHolder.getContext().getAuthentication().getName() )
+											.forEach( e -> list.add( mapper.map( e, ProductDto.class ) ) );
 		
 		mv.addObject( "userInfo", SecurityContextHolder.getContext().getAuthentication().getName() );
 		mv.addObject( "productList", list );
@@ -61,7 +62,7 @@ public class ProductController
 		return mv;
 	}
 	
-	@ApiOperation( "카테고리 목록 조회" )
+	@ApiOperation( value = "카테고리 목록 조회", notes = "카테고리 목록 조회" )
 	@PostMapping( value = "/searchCategoryList" )
 	public @ResponseBody CyResult<List<CategoryDto>> searchCategoryList()
 	{
@@ -69,7 +70,7 @@ public class ProductController
 		return productService.searchCategoryList();
 	}
 	
-	@ApiOperation( "사용자별 상품 조회" )
+	@ApiOperation( value = "사용자별 상품 조회", notes = "사용자별 상품 조회" )
 	@PostMapping( value = "/product_list/{registerId}" )
 	public @ResponseBody CyResult<List<ProductDto>> searchProductListByRegisterId( @PathVariable( value="registerId" ) String registerId )
 	{
@@ -81,7 +82,7 @@ public class ProductController
 	@PostMapping( value = "/testList/{registerId}" )
 	public @ResponseBody ResponseEntity<List<ProductDto>> repositoryProductList( @PathVariable( value="registerId" ) String registerId )
 	{
-		log.debug(" [ product_list ] . . . . ");
+		log.debug(" [ test product_list ] . . . . ");
 		return productService.repositoryProductList( registerId );
 	}
 }

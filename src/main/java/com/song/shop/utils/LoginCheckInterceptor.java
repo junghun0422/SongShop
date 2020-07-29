@@ -15,7 +15,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter
 		HttpSession session = request.getSession();
 		
 		String userId = (String) session.getAttribute("userId");
-		
+
 		if(userId == null || userId == "")
 		{
 			response.sendRedirect("/");

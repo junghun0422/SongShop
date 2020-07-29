@@ -56,52 +56,53 @@ public class ProductServiceImpl implements ProductService
 	private EntityManager em;
 
 	@Override
-	public CyResult<String> registProduct(Authentication auth, HttpServletRequest request, HttpServletResponse response, ProductDto productDto, MultipartFile product_img) 
+	public CyResult<String> registProduct( Authentication auth, HttpServletRequest request, HttpServletResponse response, ProductDto productDto, MultipartFile product_img ) 
 	{
 		CyResult<String> result = new CyResult<>();
 		
 		if( StringUtils.isEmpty(productDto.getCategoryCode()) || StringUtils.isEmpty(productDto.getProductNm()) ||
-				StringUtils.isEmpty(productDto.getProductPrice()) || product_img.getSize() < 1 )
+				StringUtils.isEmpty(productDto.getProductPrice()) || product_img.getSize() < 1 || productDto.getProductAmount() < 1   )
 		{
-			result.setCode(Constant.RESULT_FAIL_CODE_01);
-			result.setMessage("필수항목이 누락되었습니다.");
+			result.setCode( Constant.RESULT_FAIL_CODE_01 );
+			result.setMessage( "필수항목이 누락되었습니다." );
 			return result;
 		}
 		
 		String fileName = product_img.getOriginalFilename();
-		String uploadPath = request.getServletContext().getRealPath("/upload/proudct");
+		String uploadPath = request.getServletContext().getRealPath( "/upload/proudct" );
 		
-		String[] arr = fileName.split("\\.");
-		String name = arr[0] + "_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "." + arr[1];
+		String[] arr = fileName.split( "\\." );
+		String name = arr[0] + "_" + new SimpleDateFormat( "yyyyMMddHHmmss" ).format( new Date() ) + "." + arr[1];
 		
-		File file = new File(uploadPath + "/" + auth.getName() + "/" + name);
+		File file = new File( uploadPath + "/" + auth.getName() + "/" + name );
 		
-		log.debug("###########################################");
-		log.debug("filePath :: " + file.getAbsolutePath());
-		log.debug("###########################################");
+		log.debug( "###########################################" );
+		log.debug( "filePath :: " + file.getAbsolutePath() );
+		log.debug( "###########################################" );
 		
 		try
 		{
-			FileUtils.writeByteArrayToFile(file, product_img.getBytes());
+			FileUtils.writeByteArrayToFile( file, product_img.getBytes() );
 			
 			ProductEntity entity = new ProductEntity();
-			entity.setCategory(new CategoryEntity(Integer.parseInt(productDto.getCategoryCode()), productDto.getCategoryNm()));
-			entity.setProductNm(productDto.getProductNm());
-			entity.setProductPrice(productDto.getProductPrice());
-			entity.setProductImgPath(file.getAbsolutePath());
-			entity.setProductDes(productDto.getProductDes());
-			entity.setRegisterId(auth.getName());
+			entity.setCategory( new CategoryEntity( Long.parseLong( productDto.getCategoryCode() ), productDto.getCategoryNm() ) );
+			entity.setProductNm( productDto.getProductNm() );
+			entity.setProductPrice( productDto.getProductPrice() );
+			entity.setProductImgPath( file.getAbsolutePath() );
+			entity.setProductAmount( productDto.getProductAmount() );
+			entity.setProductDes( productDto.getProductDes() );
+			entity.setRegisterId( auth.getName() );
 			
-			productRepository.save(entity);
+			productRepository.save( entity );
 			
-			result.setCode(Constant.RESULT_SUCCESS_CODE);
-			result.setMessage("상품 등록 성공");
+			result.setCode( Constant.RESULT_SUCCESS_CODE );
+			result.setMessage( "상품 등록 성공" );
 		}
 		catch (IOException e) 
 		{
 			e.printStackTrace();
-			result.setCode(Constant.RESULT_FILE_CODE_90);
-			result.setMessage("상품 이미지 업로드 실패");
+			result.setCode( Constant.RESULT_FILE_CODE_90 );
+			result.setMessage( "상품 이미지 업로드 실패" );
 		}
 		
 		return result;
@@ -113,7 +114,7 @@ public class ProductServiceImpl implements ProductService
 		CyResult<List<CategoryDto>> result = new CyResult<>();;
 
 		String jpql = "SELECT new com.song.shop.dto.CategoryDto(c.categoryCode, c.categoryNm) FROM CategoryEntity c";
-		List<CategoryDto> categories = em.createQuery(jpql, CategoryDto.class).getResultList();
+		List<CategoryDto> categories = em.createQuery( jpql, CategoryDto.class ).getResultList();
 
 		if( categories.size() < 1 )
 		{
@@ -122,9 +123,9 @@ public class ProductServiceImpl implements ProductService
 			return result;
 		}
 		
-		result.setCode(Constant.RESULT_SUCCESS_CODE);
-		result.setMessage("데이터 조회 성공");
-		result.setData(categories);
+		result.setCode( Constant.RESULT_SUCCESS_CODE );
+		result.setMessage( "데이터 조회 성공" );
+		result.setData( categories );
 		
 		return result;
 	}
@@ -154,12 +155,13 @@ public class ProductServiceImpl implements ProductService
 
 		ModelMapper mapper = new ModelMapper();
 		List<ProductDto> list = new ArrayList<>();
-		productRepositorySupport.findByRegisterId( registerId ).forEach( e -> list.add( mapper.map( e, ProductDto.class ) ) );
+		productRepositorySupport.findByRegisterId( registerId )
+								.forEach( e -> list.add( mapper.map( e, ProductDto.class ) ) );
 
 		if( list.size() < 1 )
 		{
-			result.setCode(Constant.RESULT_FAIL_CODE_02);
-			result.setMessage("조회된 결과가 존재하지 않습니다.");
+			result.setCode( Constant.RESULT_FAIL_CODE_02 );
+			result.setMessage( "조회된 결과가 존재하지 않습니다." );
 			return result;
 		}
 			
@@ -176,7 +178,8 @@ public class ProductServiceImpl implements ProductService
 		List<ProductDto> products = new ArrayList<>();
 		ModelMapper mapper = new ModelMapper();
 		productRepository.findByRegisterId( registerId )
-			.forEach(e -> products.add( mapper.map( e, ProductDto.class ) ) ); 
-		return new ResponseEntity<List<ProductDto>> (products, HttpStatus.OK);
+			.forEach(e -> products.add( mapper.map( e, ProductDto.class ) ) );
+		return ResponseEntity.ok().body( products );
+	//	return new ResponseEntity<List<ProductDto>> (products, HttpStatus.OK);
 	}
 }

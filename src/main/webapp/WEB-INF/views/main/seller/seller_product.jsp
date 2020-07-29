@@ -104,7 +104,7 @@ ul
 			</div>
 			<div class="d_1">
 		  		<span>상품명 
-		  			<input type="text" class="form-control" name="product_nm" id="product_nm">
+		  			<input type="text" class="form-control" name="product_nm" id="product_nm" />
 		  		</span>
 		  	</div>
 			<div class="d_2">
@@ -112,12 +112,17 @@ ul
 		  			<input type="number" class="form-control" name="product_price" id="product_price" />
 		  		</span>
 		  	</div>
-			<div class="d_3">
+		  	<div class="d_3">
+		  		<span>수량
+		  			<input type="number" class="form-control" name="product_amount" id="c" />
+		  		</span>
+		  	</div>
+			<div class="d_4">
 	  			<span>첨부
 	  				<input type="file" class="form-control" name="product_img" id="product_img" accept=".jpg, .png"/>
 	  			</span>
   			</div>
-			<div class="d_4">
+			<div class="d_5">
   				<span>설명
   					<textarea class="form-control" rows="6" cols="10" name="proudct_des" id="proudct_des" style="resize:none;"></textarea>
 				</span>
@@ -149,6 +154,13 @@ ul
 				return;
 			}
 
+			if($("#product_amount").val() == '')
+			{
+				alert("상품수량을 입력해주세요.");
+				$("#product_amount").focus();
+				return;
+			}
+
 			if($("#product_img").get(0).files.length < 1)
 			{
 				alert("파일을 선택해주세요.");
@@ -161,11 +173,12 @@ ul
 			formData.append("category_nm", $("#category_box option:selected").text());
  			formData.append("product_nm", $("#product_nm").val());
 			formData.append("product_price", $("#product_price").val());
+			formData.append("product_amount", $("#product_amount").val());
 			formData.append("product_des", $("#proudct_des").val());
 
 			$.ajax(
 			{
-				url 		:	"/seller/registProduct",
+				url 		:	"/seller/product",
 				type		:	"post",
 				dataType	:	"json",
 				data		:	formData,
@@ -186,6 +199,7 @@ ul
 						$("#product_nm").val("");
 						$("#product_price").val("");
 						$("#product_img").val("");
+						$("#product_amount").val("");
 						$("#proudct_des").val("");
 					}
 					else 

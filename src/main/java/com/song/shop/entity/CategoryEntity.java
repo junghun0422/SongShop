@@ -31,7 +31,7 @@ public class CategoryEntity
 {
 	@Id @GeneratedValue 
 	@Column(name = "category_code")
-	private Integer categoryCode;
+	private Long categoryCode;
 	
 	@Column(name = "category_nm", nullable = false)
 	private String categoryNm;
@@ -41,16 +41,23 @@ public class CategoryEntity
 	private List<ProductEntity> products = new ArrayList<>();
 	
 	@Builder
-	public CategoryEntity(Integer categoryCode, String categoryNm)
+	public CategoryEntity(Long categoryCode, String categoryNm)
 	{
 		this.categoryCode = categoryCode;
 		this.categoryNm = categoryNm;
 	}
 	
-	public void addProduct(ProductEntity product)
+	public void addProduct( ProductEntity product )
 	{
-		product.setCategory(this);
-		products.add(product);
+		if( product.getCategory() != this )
+		{
+			product.setCategory(this);
+		}
+
+		this.products.add( product );
+
+//		product.setCategory(this);
+//		products.add(product);
 	}
 	
 	 @Override

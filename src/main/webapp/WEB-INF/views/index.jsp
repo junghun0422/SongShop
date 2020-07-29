@@ -15,6 +15,7 @@
 <link rel="stylesheet" type="text/css" href="css/login.css">
 
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+<!-- <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script> -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 <script type="text/javascript" src="lib/scripts/jquery-1.12.4.min.js"></script>
@@ -27,6 +28,7 @@
 				<h3> 로그인</h3>
 				<div class="d-flex justify-content-end social_icon">
 					<span><i id="naverIdLogin"></i></span>
+					<!-- <span><i id="naver_id_login"></i></span> -->
 					<span>
 						<i id="kakao-login-btn">
 							<a id="kakaoIdLogin_loginButton" href="#">
@@ -65,129 +67,113 @@
 </div>
 
 <script type="text/javascript">
-	Kakao.init("a8a5212775ee89de14206fd035f2b5ff");
 
-	var naverLogin = new naver.LoginWithNaverId
+	// 설정 정보 초기화
+ 	var naverLogin = new naver.LoginWithNaverId
 	({
-		cliendId	:	"0hBZHoIXRr7pJgK5UFL0",
-		callbackUrl	:	"/navercallback",
-		isPopup		:	true,
-		loginButton	:	{ color: "green", type: 1, height: 60 }
-	});
+		cliendId		:	"0hBZHoIXRr7pJgK5UFL0",
+		callbackUrl		:	"/navercallback",
+		isPopup			:	true,
+		loginButton		:	{ color: "green", type: 1, height: 60 },
+		callbackHandle	: true
+	}); 
 
-	// 설정정보를 초기화하고 연동을 준비
-	naverLogin.init();
+	// 네아로 로그인 정보를 초기화하기 위하여 init() 호출.
+ 	naverLogin.init();
 
-	$("#joinIn").click(function() 
-	{
-		//location.replace("/treePage");
-
-		location.replace("/member/join-member")	
-	});
-
-	function check()
-	{
-		var user_id = $("#user_id").val();
-		var pwd = $("#password").val();
-		
-		if(user_id == "" || pwd == "") 
-		{
-			alert("로그인 정보를 입력해주세요.");
-			return false;
-		}
-		else
-			return true;
-	}
-
-	$("#kakao-login-btn").click(function() 
-	{
-		Kakao.Auth.login(
-		{
-			persistAccessToken: true,
-			persistRefreshToken: true,
-			success	:	function(authObj)
-			{
-				console.log(JSON.stringify(authObj));
-				console.log("access :: " + authObj.access_token);
-				console.log("refresh :: " + authObj.refresh_token);
-			},
-			fail	:	function(err)
-			{
-				alert("ERR :: " + JSON.stringify(err));
-			}		
-		});
-	});
-	
-/*
-	window.addEventListener("load", function() 
+ 	/*	
+ 	window.addEventListener( "load", function() 
 	{
 		naverLogin.getLoginStatus(function (status) 
 		{
 			if(status)
 			{
 				var email = naverLogin.user.getEmail();
-				if(email == undefined || email == null) 
+				if( email == undefined || email == null ) 
 				{
 					alert("이메일은 필수정보입니다. 정보제공을 동의해주세요.");
 					naverLogin.reprompt();
 					return;
 				}
 
-				console.log(naverLogin.user);
+				console.log( naverLogin.user );
 			}
-			//else alert("callback 처리 실패!!");
+			else alert("callback 처리 실패!!");
 		});
-	});
-*/
-	
+	}); */
 
-/* 	$("#loginBtn").click(function() 
+	$( "#joinIn" ).click(function() 
 	{
-		if("" == $("#user_id").val() || "" == $("#password").val())
-		{
-			alert("로그인 정보를 입력해주세요.");
-			return;
-		}
+		//location.replace("/treePage");
+		var loginUrl = "${loginUrl}";
 
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
+		console.log( loginUrl );
+		location.href = loginUrl;
+		//location.replace( "/member/join-member" )	
+	});
 
-		var jsonData = {
-			"user_id" : $("#user_id").val(), 
-			"password" : $("#password").val()
-		};
+	function check()
+	{
+		var user_id = $( "#user_id" ).val();
+		var pwd = $( "#password" ).val();
 		
-		$.ajax({
-			url			:	"/login-processing",
-			type		:	"post",	
-			datatype	:	"json",
-			data		:	jsonData,
-			beforeSend	:	function(xhr)
-			{
-				xhr.setRequestHeader(header, token);
-			},
-			success		:	function(data)
-			{
-				alert(data);
+		if( user_id == "" || pwd == "" ) 
+		{
+			alert( "로그인 정보를 입력해주세요." );
+			return false;
+		}
+		else
+			return true;
+	}
 
-				if($("input:checkbox[id='storage']").is(":checked")) 
-					localStorage.setItem("user_id", $("#user_id").val());
-				else 
-					localStorage.setItem("user_id", "0");
-			},
-			error		:	function(request, status, error)
+	$("#kakao-login-btn").click(function() {
+		var url = "${loginUrl}";
+		console.log( "loginUrl : : " + url );
+		location.href = url;
+	});
+
+	/*******************************************
+		카카오 로그인 인증 후 사용자 정보
+	********************************************/
+/*   	Kakao.init("a8a5212775ee89de14206fd035f2b5ff");
+	$("#kakao-login-btn").click(function() 
+	{
+ 		Kakao.Auth.login(
+		{
+			persistAccessToken: true,
+			persistRefreshToken: true,
+			success	:	function( authObj )
 			{
-				alert("ERROR :: " + request.status + " | " + request.responseText + " | " + error);
-			}
+				console.log( JSON.stringify( authObj ) );
+				console.log( "access :: " + authObj.access_token );
+				console.log( "refresh :: " + authObj.refresh_token );
+				console.log( "expires_in :: " + authObj.expires_in );
+				console.log( "refresh_token_expires_in :: " + authObj.refresh_token_expires_in );
+				console.log( "token_type :: " + authObj.token_type );
+
+				Kakao.API.request(
+				{
+					url		:	"/v2/user/me",
+					success	:	function( res )
+					{
+						console.log( res );
+						console.log( JSON.stringify( res ) );
+					}
+				});
+			},
+			fail	:	function(err)
+			{
+				alert( "ERR :: " + JSON.stringify( err ) );
+			}		
 		});
 	}); */
 
 	$(function() 
 	{
-		if(localStorage.getItem("user_id") != "" && localStorage.getItem("user_id") != null && localStorage.getItem("user_id") != "0")
+		if( localStorage.getItem( "user_id" ) != "" && localStorage.getItem( "user_id" ) != null && localStorage.getItem( "user_id" ) != "0" )
 		{
-			$("#user_id").val(localStorage.getItem("user_id"));
-			$("input:checkbox[id='storage']").prop("checked", true);
+			$( "#user_id" ).val( localStorage.getItem( "user_id" ) );
+			$( "input:checkbox[id='storage']" ).prop( "checked", true );
 		}
 
 		$("input").on("blur keyup", function() { $(this).val( $(this).val().replace( /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '' ) ); });

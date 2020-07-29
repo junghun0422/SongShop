@@ -14,7 +14,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.NamedQuery;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -34,7 +33,7 @@ public class ProductEntity
 {
 	@Id @GeneratedValue
 	@Column( name = "product_seq" )
-	private int productSeq;
+	private Long productSeq;
 	
 	@Column( name = "product_nm", nullable = false )
 	private String productNm;
@@ -48,21 +47,30 @@ public class ProductEntity
 	@Column( name = "product_des", nullable = false )
 	private String productDes;
 	
+	@Column( name = "product_amount", nullable = false )
+	private int productAmount;
+	
 	@Column( name = "register_id", nullable = false )
 	private String registerId;
-	
+
 	@ManyToOne( fetch = FetchType.LAZY ) // 지연로딩
 	@JoinColumn( name = "category_code" )
 	@JsonBackReference
 	private CategoryEntity category;
 	
+//	@ManyToOne( fetch = FetchType.LAZY )
+//	@JoinColumn( name = "order_seq" )
+//	@JsonBackReference
+//	private OrderEntity order;
+	
 	@Builder
-	public ProductEntity(String productNm, String productPrice, String productImgPath, String productDes, String registerId)
+	public ProductEntity( String productNm, String productPrice, String productImgPath, String productDes, int productAmount, String registerId )
 	{
 		this.productNm = productNm;
 		this.productPrice = productPrice;
 		this.productImgPath = productImgPath;
 		this.productDes = productDes;
+		this.productAmount = productAmount;
 		this.registerId = registerId;
 	}
 	
@@ -70,6 +78,11 @@ public class ProductEntity
 	{
 		this.category = category;
 	}
+	
+//	public void setOrder(OrderEntity order)
+//	{
+//		this.order = order;
+//	}
 	
 	 @Override
 	 public String toString() 

@@ -14,44 +14,44 @@ public class EncryptUtils
 	{
 		Random random = new Random();
 		byte[] salt = new byte[8];
-		random.nextBytes(salt);
+		random.nextBytes( salt );
 		
 		StringBuffer sb = new StringBuffer();
-		for(int i=0; i<salt.length; i++)
+		for( int i=0; i<salt.length; i++ )
 		{
-			sb.append(String.format("%02x", salt[i]));
+			sb.append( String.format( "%02x", salt[i] ) );
 		}
 		return sb.toString();
 	}
 	
     /**
-     * SHA-256, salt ¾ÏÈ£È­
+     * SHA-256, salt ï¿½ï¿½È£È­
      * @param text
      * @param salt
      * @return
      */
-	public static String encryptSHA256(String text, byte[] salt)
+	public static String encryptSHA256( String text, byte[] salt )
 	{
         try 
         {
             byte[] textBytes = text.getBytes();
             byte[] bytes = new byte[textBytes.length + salt.length];
-            System.arraycopy(textBytes, 0, bytes, 0, textBytes.length);
-            System.arraycopy(salt, 0, bytes, textBytes.length, salt.length);
+            System.arraycopy( textBytes, 0, bytes, 0, textBytes.length );
+            System.arraycopy( salt, 0, bytes, textBytes.length, salt.length) ;
 
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            MessageDigest md = MessageDigest.getInstance( "SHA-256" );
             md.update(bytes);
             byte[] byteData = md.digest();
 
             StringBuffer sb = new StringBuffer();
             for(int i = 0; i < byteData.length; i++) {
-                sb.append(Integer.toString((byteData[i] & 0xFF) + 256, 16).substring(1));
+                sb.append( Integer.toString( ( byteData[i] & 0xFF ) + 256, 16 ).substring( 1 ) );
             }
             return sb.toString();
         } 
-        catch(NoSuchAlgorithmException e) 
+        catch( NoSuchAlgorithmException e ) 
         {
-            System.out.println("ÇØ´ç ¾ÏÈ£È­¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. ::: " + e.getMessage());
+            System.out.println("ï¿½Ø´ï¿½ ï¿½ï¿½È£È­ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. ::: " + e.getMessage());
         }
         return null;
 	}

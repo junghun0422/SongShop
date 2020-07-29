@@ -16,37 +16,40 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-//@Configuration
-//@EnableSwagger2
-//public class SwaggerConfig 
-//{
-//	@Bean
-//	public Docket newsApi()
-//	{
-//		 ArrayList<ResponseMessage> responseMessageStatus = new ArrayList();
-//		 responseMessageStatus.add(new ResponseMessageBuilder().code(400).message("Bad Request").responseModel(new ModelRef("Error")).build());
-//		 responseMessageStatus.add(new ResponseMessageBuilder().code(401).message("No permission").responseModel(new ModelRef("Error")).build());
-//		 responseMessageStatus.add(new ResponseMessageBuilder().code(404).message("Not found").responseModel(new ModelRef("Error")).build());
-//		 responseMessageStatus.add(new ResponseMessageBuilder().code(405).message("Method Not Allowed").responseModel(new ModelRef("Error")).build());
-//		 responseMessageStatus.add(new ResponseMessageBuilder().code(500).message("Internal Server Error").responseModel(new ModelRef("Error")).build());
-//		 
-//		return new Docket(DocumentationType.SWAGGER_2)
-//				.select()
-//				.apis(RequestHandlerSelectors.basePackage("com.song.shop.controller"))	// «ˆ¿Á RequestMapping ¿∏∑Œ «“¥Áµ» ∏µÁ URL ∏ÆΩ∫∆Æ √ﬂ√‚
-//				.build()
-//				.apiInfo(apiInfo())
-//				.globalResponseMessage(RequestMethod.POST, responseMessageStatus)
-//				.globalResponseMessage(RequestMethod.GET, responseMessageStatus)
-//				.globalResponseMessage(RequestMethod.PUT, responseMessageStatus)
-//				.globalResponseMessage(RequestMethod.DELETE, responseMessageStatus);
-//	}
-//	
-//	private ApiInfo apiInfo()
-//	{
-//		return new ApiInfoBuilder()
-//				.title("REST API")
-//				.contact("TEST")
-//				.version("0.0.1")
-//				.build();
-//	}
-//}
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig 
+{
+	@Bean
+	public Docket swaggerApi()
+	{
+		 ArrayList<ResponseMessage> responseMessageStatus = new ArrayList();
+		 responseMessageStatus.add( new ResponseMessageBuilder().code( 400 ).message( "Bad Request" ).responseModel( new ModelRef( "Error" ) ).build() );
+		 responseMessageStatus.add( new ResponseMessageBuilder().code( 401 ).message( "No permission").responseModel( new ModelRef( "Error" ) ).build() );
+		 responseMessageStatus.add( new ResponseMessageBuilder().code( 404 ).message( "Not found").responseModel( new ModelRef( "Error" ) ).build() );
+		 responseMessageStatus.add( new ResponseMessageBuilder().code( 405 ).message( "Method Not Allowed").responseModel( new ModelRef( "Error" ) ).build() );
+		 responseMessageStatus.add( new ResponseMessageBuilder().code( 500 ).message( "Internal Server Error").responseModel( new ModelRef( "Error" ) ).build() );
+		 
+		return new Docket( DocumentationType.SWAGGER_2 )
+				.select()
+				.apis( RequestHandlerSelectors.basePackage( "com.song.shop.controller" ) )
+				//.apis( RequestHandlerSelectors.any() ) // ÌòÑÏû¨ ReuquestMappingÏúºÎ°ú Ìï†ÎãπÎêú Î™®Îì† URL Î¶¨Ïä§Ìä∏Î•º Ï∂îÏ∂ú
+				//.paths( PathSelectors.ant( "/api/**" ) )	// Í∑∏Ï§ë /api/** Ïù∏ URLÎì§Îßå ÌïÑÌÑ∞ÎßÅ
+				.build()
+				.apiInfo( swaggerInfo() )
+				.globalResponseMessage( RequestMethod.POST, responseMessageStatus )
+				.globalResponseMessage( RequestMethod.GET, responseMessageStatus )
+				.globalResponseMessage( RequestMethod.PUT, responseMessageStatus )
+				.globalResponseMessage( RequestMethod.DELETE, responseMessageStatus );
+	}
+	
+	private ApiInfo swaggerInfo()
+	{
+		return new ApiInfoBuilder()
+				.license( "Jung Hun, Song" )
+				.title( "Spring API Documentation" )
+				.description( "Spring API Documentation...." )
+				.version( "0.0.1" )
+				.build();
+	}
+}

@@ -16,26 +16,27 @@ import com.song.shop.entity.QProductEntity;
 @Repository
 public class ProductRepositorySupport extends QuerydslRepositorySupport
 {
-	private static Logger log = LoggerFactory.getLogger(ProductRepositorySupport.class);
+	private static Logger log = LoggerFactory.getLogger( ProductRepositorySupport.class );
+	
 	@Autowired
 	private JPAQueryFactory query;
 
-	public ProductRepositorySupport(JPAQueryFactory query) 
+	public ProductRepositorySupport( JPAQueryFactory query ) 
 	{
-		super(ProductEntity.class);
+		super( ProductEntity.class );
 		this.query = query;
 	}
 	
-	public List<ProductEntity> findByRegisterId(String registerId)
+	public List<ProductEntity> findByRegisterId( String registerId )
 	{
 		QCategoryEntity categroy = QCategoryEntity.categoryEntity;
 		QProductEntity product = QProductEntity.productEntity;
 
 		return query
-				.selectFrom(product)
-				.leftJoin(product.category, categroy)
-				.where(product.registerId.eq(registerId))
-				.orderBy(categroy.categoryCode.desc())
+				.selectFrom( product )
+				.leftJoin( product.category, categroy )
+				.where( product.registerId.eq( registerId ) )
+				.orderBy( categroy.categoryCode.desc() )
 				.fetch();
 	}	
 }

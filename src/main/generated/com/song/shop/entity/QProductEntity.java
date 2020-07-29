@@ -24,6 +24,10 @@ public class QProductEntity extends EntityPathBase<ProductEntity> {
 
     public final QCategoryEntity category;
 
+    public final QOrderEntity order;
+
+    public final NumberPath<Integer> productAmount = createNumber("productAmount", Integer.class);
+
     public final StringPath productDes = createString("productDes");
 
     public final StringPath productImgPath = createString("productImgPath");
@@ -32,7 +36,7 @@ public class QProductEntity extends EntityPathBase<ProductEntity> {
 
     public final StringPath productPrice = createString("productPrice");
 
-    public final NumberPath<Integer> productSeq = createNumber("productSeq", Integer.class);
+    public final NumberPath<Long> productSeq = createNumber("productSeq", Long.class);
 
     public final StringPath registerId = createString("registerId");
 
@@ -55,6 +59,7 @@ public class QProductEntity extends EntityPathBase<ProductEntity> {
     public QProductEntity(Class<? extends ProductEntity> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.category = inits.isInitialized("category") ? new QCategoryEntity(forProperty("category")) : null;
+        this.order = inits.isInitialized("order") ? new QOrderEntity(forProperty("order")) : null;
     }
 
 }

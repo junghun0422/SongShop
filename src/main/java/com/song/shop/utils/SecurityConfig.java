@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	public void configure(WebSecurity web) throws Exception 
 	{
 		// static 디렉토리의 하위 파일 목록은 인증 무시 ( = 항상통과 )
-		web.ignoring().antMatchers("/css/**", "/images/**", "/lib/**", "/member/join-member", "/member/checkUser", "/member/join", "/insertCategory");
+		web.ignoring().antMatchers("/css/**", "/images/**", "/lib/**", "/member/join-member", "/member/checkUser", "/member/join", "/insertCategory", "/social/*");
 	}
 
 	@Override
