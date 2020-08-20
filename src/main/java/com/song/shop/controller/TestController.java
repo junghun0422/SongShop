@@ -1,6 +1,7 @@
 package com.song.shop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.song.shop.entity.CategoryEntity;
 import com.song.shop.repository.CategoryRepository;
+import com.song.shop.repository.querydsl.ProductRepositorySupport;
 
 import io.swagger.annotations.Api;
 
@@ -21,11 +23,20 @@ public class TestController
 	@Autowired
 	private CategoryRepository categoryRespoitory;
 	
+	@Autowired
+	private ProductRepositorySupport productRepositorySupport;
+	
 	@GetMapping("/insertCategory")
-	public void insertCategory(String category_nm)
+	public void insertCategory( String category_nm )
 	{
 		CategoryEntity cate = new CategoryEntity();
 		cate.setCategoryNm(category_nm);
 		categoryRespoitory.save(cate);
+	}
+	
+	@GetMapping( "/test" )
+	public String testApi() 
+	{
+		return productRepositorySupport.jpqlTest("test");
 	}
 }

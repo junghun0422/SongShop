@@ -13,13 +13,13 @@ import lombok.Data;
 @Data
 public class MyAuthentication extends UsernamePasswordAuthenticationToken
 {
-	private  static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	
 	Optional<UserEntity> user;
 	
-	public MyAuthentication(String user_id, String password, List<GrantedAuthority> grantedAuthorityList, Optional<UserEntity> user)
+	public MyAuthentication( String user_id, String password, List<GrantedAuthority> grantedAuthorityList, Optional<UserEntity> user )
 	{
-        super(user_id, password, grantedAuthorityList);
+        super( user_id, password, grantedAuthorityList );
         this.user = user;
 	}
 	

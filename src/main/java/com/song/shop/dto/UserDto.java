@@ -12,7 +12,7 @@ public class UserDto
 	
 	private String email;
 	
-	private int auth_level;	// 권한등급 :: (0: 관리자, 1: 판매자, 2: 고객)
+	private int auth_level;	
 	
 	private String phone_num;
 	

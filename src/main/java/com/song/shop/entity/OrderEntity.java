@@ -4,11 +4,15 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -42,7 +46,7 @@ public class OrderEntity
 	
 	@Column( name = "order_date_time", nullable = false )
 	private Timestamp orderDateTime;
-
+	
 	@Builder
 	public OrderEntity( String customerId, int totalPrice, Timestamp orderDateTime ) 
 	{
@@ -50,7 +54,6 @@ public class OrderEntity
 		this.totalPrice = totalPrice;
 		this.orderDateTime = orderDateTime;
 	}
-
 	
 	@Override
 	public String toString() 

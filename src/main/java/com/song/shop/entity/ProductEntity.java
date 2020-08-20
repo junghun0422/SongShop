@@ -74,20 +74,15 @@ public class ProductEntity
 		this.registerId = registerId;
 	}
 	
-	public void setCategory(CategoryEntity category)
+	public void setCategory( CategoryEntity category )
 	{
 		this.category = category;
 	}
 	
-//	public void setOrder(OrderEntity order)
-//	{
-//		this.order = order;
-//	}
-	
-	 @Override
-	 public String toString() 
-	 {
-		 return ToStringBuilder
-				 .reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-	 }
+	@Override
+	public String toString() 
+	{
+		return ToStringBuilder
+				.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
 }

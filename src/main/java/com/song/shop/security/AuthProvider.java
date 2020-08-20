@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 import com.song.shop.entity.UserEntity;
 
-@Component("authProvider")
+@Component( "authProvider" )
 public class AuthProvider implements AuthenticationProvider 
 {
 	@Autowired
@@ -38,6 +38,7 @@ public class AuthProvider implements AuthenticationProvider
 		{
 			throw new BadCredentialsException( "Not Found UserInfo" );
 		}
+		
 		List<GrantedAuthority> grantedAuthorityList = new ArrayList<GrantedAuthority>();
 		String role = "";
 		switch(user.get().getAuth_level())

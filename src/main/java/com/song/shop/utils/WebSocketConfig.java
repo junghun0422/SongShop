@@ -11,15 +11,18 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer
 {
 	@Override
-	public void configureMessageBroker(MessageBrokerRegistry config) 
+	public void configureMessageBroker( MessageBrokerRegistry config ) 
 	{
-		config.enableSimpleBroker("/topic");
-		config.setApplicationDestinationPrefixes("/app");
+		// in-memory message-broker, topic에 대한 prefix 설정
+		config.enableSimpleBroker( "/topic" );
+		
+		// 메세지를 수힌하는 handler 의 메세지 prefix 설정
+		config.setApplicationDestinationPrefixes( "/app" );
 	}
 
 	@Override
-	public void registerStompEndpoints(StompEndpointRegistry registry) 
+	public void registerStompEndpoints( StompEndpointRegistry registry ) 
 	{
-		registry.addEndpoint("/gs-guide-websocket").withSockJS();
+		registry.addEndpoint( "/gs-guide-websocket" ).withSockJS();
 	}
 }

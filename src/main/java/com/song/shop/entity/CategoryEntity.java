@@ -55,9 +55,12 @@ public class CategoryEntity
 		}
 
 		this.products.add( product );
-
-//		product.setCategory(this);
-//		products.add(product);
+	}
+	
+	public void removeProduct( ProductEntity product )
+	{
+		this.getProducts().remove( product );
+		product.setCategory( null );
 	}
 	
 	 @Override

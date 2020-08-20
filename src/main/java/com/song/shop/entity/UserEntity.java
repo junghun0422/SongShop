@@ -72,7 +72,7 @@ public class UserEntity
 		this.address = address;
 		this.detail_address = detail_address;
 	}
-
+	
 	@Builder 
 	public UserEntity(String user_id, String user_nm, String password, String email, int auth_level, String phone_num,
 			String zip_code, String address, String detail_address, Timestamp regist_dt) {

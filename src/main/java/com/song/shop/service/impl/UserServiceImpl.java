@@ -44,12 +44,14 @@ public class UserServiceImpl implements UserService
 	}
 
 	@Override
-	public CyResult<String> joinMember(UserDto userDto) 
+	public CyResult<String> joinMember( UserDto userDto ) 
 	{
 		CyResult<String> result = new CyResult<>();
 
 		String pwd = EncryptUtils.encryptSHA256(userDto.getPassword(), userDto.getUser_id().getBytes()).toUpperCase();
-		String val = userRepository.save(new UserEntity(userDto.getUser_id(), userDto.getUser_nm(), pwd, userDto.getEmail(), userDto.getAuth_level(), 
+		String val = userRepository.save( 
+				new UserEntity(
+						userDto.getUser_id(), userDto.getUser_nm(), pwd, userDto.getEmail(), userDto.getAuth_level(), 
 				userDto.getPhone_num(), userDto.getZip_code(), userDto.getAddress(), userDto.getDetail_address(), Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime())))).getUser_id();
 		
 		result.setCode(Constant.RESULT_SUCCESS_CODE);

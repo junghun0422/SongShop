@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.song.shop.dto.UserDto;
@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 
 @Api( tags = { "1. User" } )
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping( value="/member" )
 public class MemberController 
@@ -46,9 +46,9 @@ public class MemberController
 	}
 	
 	@ApiOperation( value = "아이디 중복체크", notes = "회원가입시 아이디 중복여부 확인" )
-	@PostMapping( "/checkUser/{user_id}" )
+	@GetMapping( "/checkUser" )
 	public @ResponseBody CyResult<String> checkUserId( @ApiParam( value = "가입할 아이디", required = true ) 
-														@PathVariable( value = "user_id" ) String user_id )
+														String user_id )
 	{
 		return userService.checkUserId(user_id);
 	}
@@ -71,10 +71,10 @@ public class MemberController
 	
 	@ApiOperation( value = "메인 페이지 이동", notes = "로그인 성공후 권한별 메인 페이지 이동" )
 	@GetMapping( value="/goToMainPage" )
-	public ModelAndView goToMainPage( Model model, Authentication auth, HttpServletResponse response, HttpServletRequest request )
+	public ModelAndView goToMainPage( ModelAndView mv, Authentication auth, HttpServletResponse response, HttpServletRequest request )
 	{
 		String returnUrl = "";
-		ModelAndView mv = new ModelAndView();
+//		ModelAndView mv = new ModelAndView();
 
 		switch( auth.getAuthorities().toString() )
 		{

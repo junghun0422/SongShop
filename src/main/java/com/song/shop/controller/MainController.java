@@ -26,6 +26,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -81,7 +82,7 @@ public class MainController
 	@ApiOperation(value = "로그인 페이지")
 //	@LogExecutionTime
 	@RequestMapping(value = { "/login", "/", "//" })
-	public ModelAndView login( ModelAndView mv, HttpServletRequest request, String loginFail) throws IOException
+	public ModelAndView login( ModelAndView mv, HttpServletRequest request, String loginFail, Model model ) throws IOException
 	{	
 		if("[ROLE_ANONYMOUS]".equals( SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString() ) )
 		{	

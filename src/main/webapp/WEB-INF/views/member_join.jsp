@@ -161,7 +161,7 @@
 
 		$.ajax({
 			url			:	"/member/checkUser",
-			type		:	"post",
+			type		:	"get",
 			datatype	:	"json",
 			data		:	{ "user_id" : $("#user_id").val() },
 			success		:	function(responseData)

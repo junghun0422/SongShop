@@ -5,7 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import com.song.shop.entity.CategoryEntity;
 
-public interface CategoryRepository extends JpaRepository<CategoryEntity, Long>
-{
-
-}
+/**
+ * 기본 JPA Interface
+ * @author Song
+ */
+public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> { }

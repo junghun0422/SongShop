@@ -105,11 +105,8 @@
 	$( "#joinIn" ).click(function() 
 	{
 		//location.replace("/treePage");
-		var loginUrl = "${loginUrl}";
-
-		console.log( loginUrl );
-		location.href = loginUrl;
-		//location.replace( "/member/join-member" )	
+		location.replace( "/member/join-member" )
+		//location.href="/oauth2/authorization/google";	
 	});
 
 	function check()
@@ -128,7 +125,6 @@
 
 	$("#kakao-login-btn").click(function() {
 		var url = "${loginUrl}";
-		console.log( "loginUrl : : " + url );
 		location.href = url;
 	});
 
